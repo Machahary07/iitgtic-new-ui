@@ -102,6 +102,7 @@ p {
 }
 
 .apply-cta__button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 1rem;
@@ -114,7 +115,10 @@ p {
   text-decoration: none;
 }
 
+/* ↗ in a circle at the right end, on a layer above the button's label. */
 .apply-cta__arrow {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-content: center;
   width: 52px;
@@ -238,10 +242,19 @@ p {
   -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
 }
 
-/* Plain white pill, sized like the nav links. */
+/* Light pages (e.g. About): transparent too, but keeps its dark text. */
+.site-header--clear {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: none;
+}
+
+/* White pill, sized like the nav links, with a small ↗ circle at the end. */
 .site-header__apply {
   justify-self: end;
-  padding: 0.6rem 1.25rem;
+  gap: 0.6rem;
+  padding: 0.3rem 0.3rem 0.3rem 1.1rem;
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: var(--color-white);
@@ -249,6 +262,38 @@ p {
   font-size: 17px;
   font-weight: 700;
   line-height: 1;
+}
+
+.site-header__apply-arrow {
+  display: grid;
+  place-content: center;
+  width: 30px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--color-charcoal);
+  color: var(--color-white);
+}
+
+.site-header__apply-arrow svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Same fly-out/fly-in arrow as the other Apply buttons (cta-arrow keyframes). */
+.site-header__apply:hover .site-header__apply-arrow svg {
+  animation: cta-arrow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__apply:hover .site-header__apply-arrow svg {
+    animation: none;
+  }
 }
 
 .site-header--over .site-header__apply {
@@ -312,6 +357,12 @@ p {
   white-space: nowrap;
 }
 
+/* Direct links (e.g. Contact) share the trigger's look. */
+.nav-menu__link {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .nav-menu__trigger:hover,
 .nav-menu__trigger[data-active] {
   color: var(--color-primary);
@@ -336,6 +387,20 @@ p {
 
 .nav-menu__card a:hover {
   background: var(--color-subtle);
+}
+
+/* Rolling label (lib/nav-roll.js): two copies stacked, clipped to one line. */
+.roll {
+  display: inline-block;
+  vertical-align: top;
+  height: 1.3em;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+.roll__line {
+  display: block;
+  white-space: nowrap;
 }
 
 .nav-menu__card a[aria-current='page'] {
@@ -455,10 +520,12 @@ p {
 
 /* Main slides up over the footer, which waits pinned at the bottom of the
    viewport underneath: a "reveal" footer. Main needs an opaque background. */
+/* Full width so its background covers the reveal footer edge to edge; the
+   content is still held to --container by the side padding. */
 .site-main {
   position: relative;
   z-index: 1;
-  padding-block: 3rem;
+  padding: 3rem max(1.5rem, (100% - var(--container)) / 2 + 1.5rem);
   min-height: 60vh;
   background: var(--color-bg);
 }
@@ -717,7 +784,7 @@ p {
     gap: 1rem;
   }
 
-  .nav-menu__trigger::after {
+  button.nav-menu__trigger::after {
     content: '';
     flex: none;
     width: 0.38em;
@@ -764,6 +831,20 @@ p {
   .nav-menu__card a:hover {
     background: none;
     color: var(--color-white);
+  }
+
+  /* No rolling on phones: show the label once and let it wrap. */
+  .roll {
+    height: auto;
+    overflow: visible;
+  }
+
+  .roll__line {
+    white-space: normal;
+  }
+
+  .roll__line[aria-hidden] {
+    display: none;
   }
 
   .site-nav__extra {

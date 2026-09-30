@@ -5,8 +5,12 @@
 // AND a viewport wider than tablets (so phones, tablets, and tablets with a
 // trackpad are all excluded); off for reduced motion too. Uses the `translate`
 // property so it never fights transforms.
-const OUTER = 0.25; // share of the pointer's offset from centre
+// Share of the pointer's offset from centre. Override per element with a
+// number: data-magnetic="0.05" (outer) / data-magnetic-inner="0.12" (total
+// pull for that inner element), e.g. gentler for big cards.
+const OUTER = 0.25;
 const INNER = 0.5;
+const strength = (value, fallback) => (value && !Number.isNaN(+value) ? +value : fallback);
 
 const desktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1025px)');
 const still = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -31,9 +35,11 @@ document.addEventListener(
     const dx = event.clientX - (r.left + r.width / 2);
     const dy = event.clientY - (r.top + r.height / 2);
     el.setAttribute('data-magnetic-active', '');
-    el.style.translate = `${dx * OUTER}px ${dy * OUTER}px`;
+    const outer = strength(el.dataset.magnetic, OUTER);
+    el.style.translate = `${dx * outer}px ${dy * outer}px`;
     for (const inner of el.querySelectorAll('[data-magnetic-inner]')) {
-      inner.style.translate = `${dx * (INNER - OUTER)}px ${dy * (INNER - OUTER)}px`; // on top of the button's own shift
+      const pull = strength(inner.dataset.magneticInner, INNER) - outer; // on top of the outer shift
+      inner.style.translate = `${dx * pull}px ${dy * pull}px`;
     }
   },
   { passive: true },

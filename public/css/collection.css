@@ -169,8 +169,17 @@
   transition: scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.collection__card:hover .collection__thumb {
+.collection__card:hover .collection__thumb,
+.collection__card:hover .collection__logo {
   scale: 1.04;
+}
+
+/* Jobs show the organisation's logo, whole and uncropped. */
+.collection__logo {
+  width: 62%;
+  max-height: 40%;
+  object-fit: contain;
+  transition: scale 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .collection__name,

@@ -1,19 +1,16 @@
 # Page routes
 
-These 67 routes come from `src/routes/**/+page.svelte`. Bracketed segments are dynamic parameters; `[...key]` matches the remaining path segments.
+These 63 routes come from `src/routes/**/+page.svelte`. Bracketed segments are dynamic parameters; `[...key]` matches the remaining path segments.
 
 ```text
 /
 /about
-/about/blog
-/about/blog/[slug]
 /about/committee-of-management
 /about/faq
 /about/governing-body
 /about/mentors
 /about/team
 /about/tic-coordinators
-/about/what-happens
 /apply
 /auth/callback
 /auth/reset-password
@@ -41,7 +38,6 @@ These 67 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /opportunities/events
 /opportunities/startup-jobs
 /opportunities/tic-jobs
-/partners
 /privacy
 /programs
 /refund
@@ -78,6 +74,8 @@ These paths have a `+page.server.ts` redirect file but no matching `+page.svelte
 
 - `/tic-admin/ai` → `/tic-admin?assistant=open`
 - `/tic-admin/home-page` → `/tic-admin/content/homeHero`
+
+`/partners` now redirects to `/about#partners`: partners are a section of the About page.
 
 `/events` now also redirects to `/opportunities/events`: the events list is a filter of Opportunities, alongside `/opportunities/startup-jobs` and `/opportunities/tic-jobs`. Event detail pages stay at `/events/[slug]`.
 

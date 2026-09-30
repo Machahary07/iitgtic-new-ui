@@ -1,0 +1,422 @@
+/* About: a centred statement over two drifting shapes on warm off-white.
+   Main stays transparent so the Apply section's rounded corners show the
+   footer; the section brings its own background. */
+.site-main:has(> .about-page) {
+  padding: 0;
+  background: transparent;
+}
+
+/* One shared canvas for the About sections: the shapes of each may overlap
+   the other, and are only clipped at the edges of the whole page area. */
+.about-page {
+  position: relative;
+  overflow: hidden;
+  background: #f3f0eb;
+}
+
+.about {
+  --ink: #16181b;
+  --circle: #5b9bff;
+  --circle-ink: #ffffff;
+  --rect: #b8efcf;
+  --rect-ink: #004ebc;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 9rem 1.5rem 4rem; /* top clears the floating header */
+  color: var(--ink);
+}
+
+/* Shapes: placed and moved by pages/about.js (size, translate, rotate). */
+.about__shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: translate;
+}
+
+.about__shape--circle {
+  border-radius: 50%;
+  background: var(--circle);
+}
+
+.about__shape--rect {
+  background: var(--rect);
+}
+
+.about__copy {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2rem;
+  max-width: 1400px;
+  text-align: center;
+}
+
+.about__logo {
+  width: 72px;
+  height: auto;
+  margin-bottom: -0.75rem; /* sits closer to its label than the copy's gap */
+}
+
+.about__eyebrow {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Small note under the statement, linking to the Governing Body page. */
+.about__governed {
+  position: relative;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgb(22 24 27 / 0.7);
+}
+
+.about__governed a {
+  color: var(--color-accent);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap; /* keep each linked name on one line */
+}
+
+/* The base statement and its two clipped, recoloured copies stack exactly. */
+.about__stack {
+  display: grid;
+}
+
+.about__statement {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 76px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.about__statement--on-circle {
+  color: var(--circle-ink);
+  clip-path: circle(0); /* hidden until the first frame */
+}
+
+.about__statement--on-rect {
+  color: var(--rect-ink);
+  clip-path: circle(0);
+}
+
+@media (max-width: 900px) {
+  .about {
+    padding: 7rem 1rem 3rem;
+  }
+
+  .about__eyebrow {
+    font-size: 14px;
+  }
+}
+
+/* "Inside IITG-TIC": heading + a carousel of dark cards, each with an
+   animated 3D doodle, over two soft blobs. */
+.happens {
+  position: relative;
+  padding: 3rem 0 5rem;
+  color: #16181b;
+  scroll-margin-top: 1rem;
+}
+
+.happens__blob {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  animation: happens-float 14s ease-in-out infinite alternate;
+}
+
+.happens__blob--bottom {
+  bottom: -14rem;
+  left: -8rem;
+  width: 42vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #b8efcf;
+  animation-delay: -6s;
+}
+
+@keyframes happens-float {
+  to {
+    translate: 30px -24px;
+  }
+}
+
+.happens__head {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  max-width: 720px;
+  margin: 0 auto 3.5rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.happens__heading {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Horizontal track: scroll-snapping, scrollbar hidden, cards bleed past the edges. */
+.happens__track {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0.5rem max(1.5rem, (100% - 1400px) / 2) 1rem;
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(1.5rem, (100% - 1400px) / 2);
+  scrollbar-width: none;
+}
+
+.happens__track::-webkit-scrollbar {
+  display: none;
+}
+
+.happens__card {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: min(400px, 82vw);
+  height: 560px;
+  overflow: hidden;
+  border-radius: 40px;
+  padding: 1.5rem;
+  background:
+    radial-gradient(90% 60% at 80% 0%, rgb(0 78 188 / 0.35), transparent 70%),
+    radial-gradient(70% 50% at 10% 100%, rgb(0 180 81 / 0.22), transparent 70%),
+    #0b0d12;
+  color: var(--color-white);
+  scroll-snap-align: start;
+}
+
+.happens__chip {
+  align-self: flex-start;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.happens__doodle {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.happens__body {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.happens__title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.happens__text {
+  margin: 0;
+  color: rgb(255 255 255 / 0.7);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.happens__cta {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 999px;
+  color: var(--color-white);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.happens__cta:hover {
+  background: var(--color-white);
+  color: #0b0d12;
+}
+
+.happens__nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.happens__arrow {
+  display: grid;
+  place-content: center;
+  width: 52px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.6);
+  color: #16181b;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.happens__arrow:hover {
+  background: var(--color-white);
+}
+
+.happens__arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* "In association with": white tiles 2px apart, same side padding as the
+   cards above. */
+.partners {
+  position: relative;
+  z-index: 1;
+  padding: 2rem max(1.5rem, (100% - 1400px) / 2) 6rem;
+  color: #16181b;
+}
+
+.partners__head {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.partners__eyebrow {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.partners__title {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.partners__intro {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.partners__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partners__card {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem 1rem 1.5rem;
+  border-radius: 4px;
+  background: var(--color-white);
+}
+
+.partners__logo {
+  align-self: center;
+  width: auto;
+  max-width: 70%;
+  height: 110px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.partners__name {
+  color: rgb(22 24 27 / 0.65);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .happens {
+    padding: 2rem 0 3.5rem;
+  }
+
+  .happens__card {
+    height: 500px;
+    border-radius: 32px;
+  }
+
+  .happens__title {
+    font-size: 26px;
+  }
+
+  .partners {
+    padding: 1rem 1rem 4rem;
+  }
+
+  .partners__intro {
+    font-size: 17px;
+  }
+
+  .partners__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* An odd one out takes the whole last row rather than half of it. */
+  .partners__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .partners__logo {
+    height: 80px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .partners__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .happens__blob {
+    animation: none;
+  }
+}

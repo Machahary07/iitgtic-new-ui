@@ -76,6 +76,16 @@ async function render(url) {
   // `mount` may return a cleanup function, run before the next page renders.
   const result = page.mount?.(outlet, ctx);
   if (typeof result === 'function') cleanup = result;
+
+  // Land on #section links (e.g. /about#partners), gliding down to it.
+  if (url.hash) scrollToHash(url.hash);
+}
+
+const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function scrollToHash(hash) {
+  const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+  target?.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth' });
 }
 
 export function navigate(to, { replace = false } = {}) {
@@ -93,8 +103,13 @@ function onLinkClick(event) {
   if (!link || link.target || link.hasAttribute('download') || link.dataset.external != null) return;
   const url = new URL(link.href);
   if (url.origin !== location.origin) return;
-  if (url.pathname === location.pathname && url.search === location.search && url.hash) return; // in-page anchor
   event.preventDefault();
+  if (url.pathname === location.pathname && url.search === location.search && url.hash) {
+    // In-page anchor: glide to the section without re-rendering.
+    if (url.hash !== location.hash) history.pushState(null, '', url);
+    scrollToHash(url.hash);
+    return;
+  }
   navigate(url.href);
 }
 

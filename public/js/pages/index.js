@@ -1,17 +1,21 @@
 import { html } from '../lib/html.js';
 import { loadGsap } from '../lib/gsap.js';
 import { applyCta } from '../components/apply-cta.js';
+import { CONTENT } from '../data/content.js';
+import { createLineObject } from '../lib/line-objects.js';
 
 export const title = 'Home';
 
 // Each slide brings its own background: photos (/img/hero/<photos>-N.jpg, with
-// their pixel sizes for the aspect ratio) and three decorative text cards.
+// their pixel sizes for the aspect ratio), two rotating 3D line-art objects
+// (lib/line-objects.js) and three decorative text cards.
 const SLIDES = [
   {
     title: 'IITG Technology Incubation Center',
     tagline: 'Where Northeast India’s DeepTech ideas become ventures for global markets.',
     cta: ['/apply', 'Apply'],
-    photos: ['tic', [[675, 900], [675, 900], [900, 675], [900, 675], [900, 599], [900, 599]]],
+    photos: ['tic', [[675, 900], [675, 900], [900, 675], [900, 675]]],
+    objects: ['phone', 'gyroscope'],
     cards: {
       list: ['This week at TIC', ['Mentorship hours', 'Investor connect']],
       bubble: ['Seed funds', 'for early-stage DeepTech ventures'],
@@ -22,7 +26,8 @@ const SLIDES = [
     title: 'Incubation',
     tagline: 'Workspace, mentors and funding support for early-stage founders.',
     cta: ['/incubation', 'Explore incubation'],
-    photos: ['incubation', [[900, 600], [900, 600], [900, 600], [900, 600], [900, 599], [900, 599]]],
+    photos: ['incubation', [[900, 600], [900, 600], [900, 600], [900, 600]]],
+    objects: ['gears', 'lattice'],
     cards: {
       list: ['Incubation tracks', ['Pre-incubation', 'Incubation']],
       bubble: ['Mentorship', 'from faculty and industry experts'],
@@ -33,7 +38,8 @@ const SLIDES = [
     title: 'Startups',
     tagline: 'Meet the companies built with IITG TIC.',
     cta: ['/incubated-startups', 'View startups'],
-    photos: ['startups', [[692, 900], [675, 900], [900, 675], [900, 643], [900, 643], [900, 599]]],
+    photos: ['startups', [[692, 900], [675, 900], [900, 675], [900, 643]]],
+    objects: ['drone', 'chip'],
     cards: {
       list: ['Startup support', ['Market access', 'Investor network']],
       bubble: ['DeepTech ventures', 'from Northeast India, built for global markets'],
@@ -44,7 +50,8 @@ const SLIDES = [
     title: 'Opportunities',
     tagline: 'Jobs at TIC and at our incubated startups.',
     cta: ['/opportunities', 'See openings'],
-    photos: ['opportunities', [[900, 395], [802, 900], [900, 506], [900, 675], [900, 675], [900, 506]]],
+    photos: ['opportunities', [[900, 395], [802, 900], [900, 506], [900, 675]]],
+    objects: ['dna', 'satellite'],
     cards: {
       list: ['Open roles', ['Startup jobs', 'TIC jobs']],
       bubble: ['Hackathons', 'trainings and innovation challenges'],
@@ -55,13 +62,7 @@ const SLIDES = [
 
 const SLIDE_MS = 4500;
 
-const ASSOCIATES = [
-  ['iitguwahati_logo.jpg', 'IIT Guwahati'],
-  ['meity_logo.jpg', 'Ministry of Electronics and Information Technology'],
-  ['msme_logo.jpg', 'Ministry of Micro, Small and Medium Enterprises'],
-  ['startupindia_logo.jpg', 'Startup India'],
-  ['technologydevelopmentboard_logo.jpg', 'Technology Development Board'],
-];
+const ASSOCIATES = CONTENT.partners; // shared with the About page's partner cards
 
 // Infinite logo marquee: two identical halves, the track slides by -50% and
 // loops. Each half repeats the list so it's always wider than the window.
@@ -74,9 +75,9 @@ const associationMarquee = () => html`
           (half) => html`
             <div class="association__group"${half ? html` aria-hidden="true"` : ''}>
               ${[...ASSOCIATES, ...ASSOCIATES].map(
-                ([file, name], n) => html`
+                ({ logo, name }, n) => html`
                   <div class="association__item">
-                    <img src="/img/in-association-logos/${file}" alt="${half || n >= ASSOCIATES.length ? '' : name}" loading="lazy" decoding="async" />
+                    <img src="${logo}" alt="${half || n >= ASSOCIATES.length ? '' : name}" loading="lazy" decoding="async" />
                   </div>`,
               )}
             </div>`,
@@ -87,8 +88,9 @@ const associationMarquee = () => html`
 
 // Photos sit below the shade layer and cards above it, each in its own
 // per-slide set, so the shade never dims the cards (even mid-fade).
-const photoSet = ({ photos: [name, sizes] }) => html`
+const photoSet = ({ photos: [name, sizes], objects }) => html`
   <div class="hero__set">
+    ${objects.map((kind) => html`<canvas class="hero__object" data-object="${kind}" width="400" height="400"></canvas>`)}
     ${sizes.map(([w, h], n) => html`<img src="/img/hero/${name}-${n + 1}.jpg" alt="" width="${w}" height="${h}" decoding="async" />`)}
   </div>`;
 
@@ -129,7 +131,10 @@ export default function page() {
             <div class="hero__slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${SLIDES.length}"${i ? html` hidden` : ''}>
               <h1 class="hero__title">${title}</h1>
               <p class="tagline hero__tagline" style="--half: ${Math.ceil(tagline.length / 2) + 2}ch">${tagline}</p>
-              <a class="btn hero__cta" href="${href}" data-magnetic><span class="hero__cta-label" data-magnetic-inner>${label}</span></a>
+              <a class="btn hero__cta" href="${href}" data-magnetic>
+                <span class="hero__cta-body"><span class="hero__cta-label" data-magnetic-inner>${label}</span></span>
+                <span class="hero__cta-arrow" aria-hidden="true" data-magnetic-inner><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg></span>
+              </a>
             </div>`,
         )}
       </div>
@@ -190,7 +195,10 @@ function scatter(i, hero) {
     ...cards.map((el) => ({ el, size: () => [el.offsetWidth, el.offsetHeight] })),
     ...photos.map((el) => {
       const ratio = el.getAttribute('height') / el.getAttribute('width');
-      let w = (small ? rand(0.26, 0.34) : rand(0.08, 0.13)) * box.width;
+      // 3D objects (canvases, listed before photos so they're placed first)
+      // come a little larger than photos.
+      const big = el.tagName === 'CANVAS';
+      let w = (small ? rand(0.26, 0.34) : big ? rand(0.12, 0.17) : rand(0.08, 0.13)) * box.width;
       return { el, size: () => [w, w * ratio], shrink: () => (w *= 0.85) };
     }),
   ];
@@ -225,13 +233,16 @@ function createTextFx(gsap, SplitText, slides) {
       tagline: SplitText.create(slide.querySelector('.hero__tagline'), { type: 'words' }),
       cta,
       label: SplitText.create(cta.querySelector('.hero__cta-label'), { type: 'chars' }),
+      arrow: cta.querySelector('.hero__cta-arrow'),
     };
   });
 
   // Button morph, pill <-> circle. The close is the open mirrored in time:
   // open  = circle widens (0-0.55s), letters grow from the centre out (0.2-0.75s)
   // close = letters shrink from the edges in (0-0.55s), circle closes (0.2-0.75s)
-  // The label is centred in the button, so the sides clip it evenly.
+  // The label is centred in the button, so the sides clip it evenly. The ↗
+  // arrow counts as the last "letter": first to go, last to come back.
+  const letters = (i) => [...parts[i].label.chars, parts[i].arrow];
   const MORPH = { width: 0.55, letters: 0.3, spread: 0.25, lag: 0.2 };
 
   function buttonShapes(cta) {
@@ -243,23 +254,23 @@ function createTextFx(gsap, SplitText, slides) {
   }
 
   function openButton(i) {
-    const { cta, label } = parts[i];
+    const { cta } = parts[i];
     const { pill, circle } = buttonShapes(cta); // measured at rest
     gsap.set(cta, circle);
-    gsap.set(label.chars, { scale: 0, opacity: 0 });
+    gsap.set(letters(i), { scale: 0, opacity: 0 });
     return gsap
       .timeline()
       .to(cta, { ...pill, duration: MORPH.width, ease: 'power3.inOut' }, 0)
-      .to(label.chars, { scale: 1, opacity: 1, duration: MORPH.letters, ease: 'power2.out', stagger: { amount: MORPH.spread, from: 'center' } }, MORPH.lag);
+      .to(letters(i), { scale: 1, opacity: 1, duration: MORPH.letters, ease: 'power2.out', stagger: { amount: MORPH.spread, from: 'center' } }, MORPH.lag);
   }
 
   function closeButton(i) {
-    const { cta, label } = parts[i];
+    const { cta } = parts[i];
     const { pill, circle } = buttonShapes(cta);
     gsap.set(cta, pill);
     return gsap
       .timeline()
-      .to(label.chars, { scale: 0, opacity: 0, duration: MORPH.letters, ease: 'power2.in', stagger: { amount: MORPH.spread, from: 'edges' } }, 0)
+      .to(letters(i), { scale: 0, opacity: 0, duration: MORPH.letters, ease: 'power2.in', stagger: { amount: MORPH.spread, from: 'edges' } }, 0)
       .to(cta, { ...circle, duration: MORPH.width, ease: 'power3.inOut' }, MORPH.lag);
   }
 
@@ -276,9 +287,9 @@ function createTextFx(gsap, SplitText, slides) {
 
   // Puts a slide's text back at rest (so it can be measured).
   function reset(i) {
-    const { title, tagline, label } = parts[i];
+    const { title, tagline } = parts[i];
     // Clear only what the tweens set: SplitText keeps its own inline styles.
-    gsap.set([...label.chars, ...title.chars, ...tagline.words], { clearProps: 'transform,opacity' });
+    gsap.set([...letters(i), ...title.chars, ...tagline.words], { clearProps: 'transform,opacity' });
     settle(i);
   }
 
@@ -319,6 +330,29 @@ export function mount(outlet) {
   let fx; // text animations, once GSAP has loaded
   let busy = false;
 
+  // 3D objects: created on first show, animating only while their slide is
+  // active. If Three.js can't load, the canvases are simply dropped.
+  const objects = new Map(); // canvas -> promise of controller
+  const objectFor = (canvas) => {
+    if (!objects.has(canvas)) {
+      objects.set(
+        canvas,
+        createLineObject(canvas, canvas.dataset.object).catch((err) => {
+          console.error(err);
+          canvas.remove();
+        }),
+      );
+    }
+    return objects.get(canvas);
+  };
+  const playObjects = (i) => {
+    const active = new Set(hero.querySelectorAll(`[data-photos] > .hero__set:nth-child(${i + 1}) canvas`));
+    for (const canvas of hero.querySelectorAll('.hero__object')) {
+      if (active.has(canvas)) objectFor(canvas).then((o) => o?.start());
+      else if (objects.has(canvas)) objects.get(canvas).then((o) => o?.stop());
+    }
+  };
+
   async function show(next) {
     if (busy) return;
     const from = index;
@@ -335,6 +369,7 @@ export function mount(outlet) {
     // Swap backgrounds only once the new ones are placed.
     for (const set of hero.querySelectorAll('.hero__set[data-active]')) set.removeAttribute('data-active');
     for (const set of setsFor(index)) set.setAttribute('data-active', '');
+    playObjects(index);
     if (fx) await fx.enter(index);
     busy = false;
   }
@@ -375,6 +410,7 @@ export function mount(outlet) {
     if (gone) return;
     scatter(index, hero);
     for (const set of setsFor(index)) set.setAttribute('data-active', '');
+    playObjects(index);
     if (!autoplay) return reveal(); // reduced motion: no text animation
     // The text stays hidden until GSAP arrives; give up after 3s and show it.
     const fallback = setTimeout(reveal, 3000);
@@ -396,6 +432,7 @@ export function mount(outlet) {
   return () => {
     gone = true;
     fx?.kill();
+    for (const pending of objects.values()) pending.then((o) => o?.dispose());
     clearTimeout(timer);
     clearTimeout(resizeTimer);
     window.removeEventListener('resize', onResize);

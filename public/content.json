@@ -1,4 +1,28 @@
 {
+  "partners": [
+    {
+      "name": "IIT Guwahati",
+      "logo": "/img/in-association-logos/iitguwahati_logo.jpg"
+    },
+    {
+      "name": "Ministry of Electronics and Information Technology",
+      "short": "MeitY",
+      "logo": "/img/in-association-logos/meity_logo.jpg"
+    },
+    {
+      "name": "Ministry of Micro, Small and Medium Enterprises",
+      "short": "MSME",
+      "logo": "/img/in-association-logos/msme_logo.jpg"
+    },
+    {
+      "name": "Startup India",
+      "logo": "/img/in-association-logos/startupindia_logo.jpg"
+    },
+    {
+      "name": "Technology Development Board",
+      "logo": "/img/in-association-logos/technologydevelopmentboard_logo.jpg"
+    }
+  ],
   "opportunities": [
     {
       "type": "startup-job",
@@ -10,10 +34,10 @@
         "Full-time",
         "Guwahati"
       ],
-      "image": "/img/hero/startups-4.jpg",
       "href": "/opportunities/sample-startup-frontend-developer",
       "dummy": true,
-      "deadline": "2026-10-04"
+      "deadline": "2026-10-04",
+      "logo": "/img/logos/startup-placeholder.svg"
     },
     {
       "type": "tic-job",
@@ -25,10 +49,10 @@
         "Full-time",
         "On-site"
       ],
-      "image": "/img/hero/tic-3.jpg",
       "href": "/opportunities/tic-program-associate",
       "dummy": true,
-      "deadline": "2026-10-31"
+      "deadline": "2026-10-31",
+      "logo": "/img/tic-logo.svg"
     },
     {
       "type": "startup-job",
@@ -41,9 +65,9 @@
         "Internship",
         "3 months"
       ],
-      "image": "/img/hero/startups-5.jpg",
       "href": "/opportunities/sample-startup-research-intern",
-      "dummy": true
+      "dummy": true,
+      "logo": "/img/logos/startup-placeholder.svg"
     },
     {
       "type": "event",

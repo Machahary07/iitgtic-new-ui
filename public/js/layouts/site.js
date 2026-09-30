@@ -1,20 +1,21 @@
 import { html } from '../lib/html.js';
 import { current, isActive } from '../lib/nav.js';
+import '../lib/nav-roll.js';
 
-// Top navigation: every public page lives under one of three dropdowns.
+// Top navigation: three dropdowns plus a direct Contact link. An entry with
+// `href` (instead of `links`) is a plain link with no dropdown.
 const NAV = [
   {
     label: 'About',
     links: [
       ['/about', 'About TIC'],
-      ['/about/what-happens', 'What happens at TIC'],
       ['/about/team', 'Team'],
       ['/about/governing-body', 'Governing body'],
       ['/about/committee-of-management', 'Committee of management'],
       ['/about/tic-coordinators', 'TIC coordinators'],
       ['/about/mentors', 'Mentors'],
-      ['/partners', 'Partners'],
-      ['/contact', 'Contact'],
+      ['/about#partners', 'Partners'],
+      ['/about/faq', 'FAQ'],
     ],
   },
   {
@@ -35,10 +36,9 @@ const NAV = [
       ['/opportunities/startup-jobs', 'Startup jobs'],
       ['/opportunities/tic-jobs', 'TIC jobs'],
       ['/opportunities/events', 'Events'],
-      ['/about/blog', 'Blog'],
-      ['/about/faq', 'FAQ'],
     ],
   },
+  { label: 'Contact', href: '/contact' },
 ];
 
 // TODO: confirm the official LinkedIn page URL.
@@ -73,20 +73,25 @@ function setMenuOpen(header, open) {
   const toggle = header.querySelector('.site-menu-toggle');
   toggle.setAttribute('aria-expanded', String(open));
   toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-  if (!open) for (const trigger of header.querySelectorAll('.nav-menu__trigger')) trigger.setAttribute('aria-expanded', 'false');
+  if (!open) for (const trigger of header.querySelectorAll('button.nav-menu__trigger')) trigger.setAttribute('aria-expanded', 'false');
 }
 
 document.addEventListener('click', (event) => {
+  // Following a menu link (even to a #section on this page, which doesn't
+  // re-render the layout) closes the phone menu.
+  const header = document.querySelector('.site-header[data-menu-open]');
+  if (header && event.target.closest?.('.site-nav a')) setMenuOpen(header, false);
+
   const toggle = event.target.closest?.('.site-menu-toggle');
   if (toggle) {
     const header = toggle.closest('.site-header');
     return setMenuOpen(header, !header.hasAttribute('data-menu-open'));
   }
 
-  const trigger = event.target.closest?.('.nav-menu__trigger');
+  const trigger = event.target.closest?.('button.nav-menu__trigger');
   if (!trigger || !phone.matches) return;
   const expand = trigger.getAttribute('aria-expanded') !== 'true';
-  for (const other of document.querySelectorAll('.nav-menu__trigger')) other.setAttribute('aria-expanded', 'false');
+  for (const other of document.querySelectorAll('button.nav-menu__trigger')) other.setAttribute('aria-expanded', 'false');
   trigger.setAttribute('aria-expanded', String(expand));
 });
 
@@ -115,16 +120,27 @@ window.addEventListener('scroll', queueReveal, { passive: true });
 window.addEventListener('resize', queueReveal);
 new MutationObserver(queueReveal).observe(document.body, { childList: true, subtree: true });
 
+// Light pages whose own background runs up behind a transparent header.
+const CLEAR_PAGES = ['/about'];
+
 const DARK_PAGES = ['/', '/opportunities', '/opportunities/startup-jobs', '/opportunities/tic-jobs', '/opportunities/events'];
 
-const navMenu = ({ label, links }, path, i) => {
+const navMenu = ({ label, links, href }, path, i) => {
+  if (href) {
+    return html`
+      <div class="nav-menu" style="--g: ${i}">
+        <a class="nav-menu__trigger nav-menu__link" href="${href}"${current(path, href)}${isActive(path, href) ? html` data-active` : ''}>${label}</a>
+      </div>`;
+  }
   const active = links.some(([href]) => isActive(path, href, true));
   return html`
     <div class="nav-menu" style="--g: ${i}">
       <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-menu-${i}"${active ? html` data-active` : ''}>${label}</button>
       <div class="nav-menu__panel" id="nav-menu-${i}">
         <ul class="nav-menu__card">
-          ${links.map(([href, text], n) => html`<li style="--i: ${n}"><a href="${href}"${current(path, href, true)}>${text}</a></li>`)}
+          ${links.map(
+            ([href, text], n) => html`<li style="--i: ${n}"><a href="${href}"${current(path, href, true)}><span class="roll" data-roll><span class="roll__line">${text}</span><span class="roll__line" aria-hidden="true">${text}</span></span></a></li>`,
+          )}
         </ul>
       </div>
     </div>`;
@@ -135,7 +151,7 @@ export default function siteLayout(content, { path }) {
   // transparently over the page with white text.
   const overHero = DARK_PAGES.includes(path);
   return html`
-    <header class="site-header${overHero ? ' site-header--over' : ''}">
+    <header class="site-header${overHero ? ' site-header--over' : ''}${CLEAR_PAGES.includes(path) ? ' site-header--clear' : ''}">
       <div class="site-header__inner">
         <a class="site-logo" href="/">
           <img class="site-logo__light" src="/img/tic-logo.svg" alt="IITG Technology Incubation Centre" width="250" height="64" />
@@ -155,13 +171,13 @@ export default function siteLayout(content, { path }) {
             <p class="site-nav__legal">© ${new Date().getFullYear()} IITG Technology Incubation Centre · <a href="/privacy">Privacy</a></p>
           </div>
         </nav>
-        <a class="btn site-header__apply" href="/apply" data-magnetic><span data-magnetic-inner>Apply</span></a>
+        <a class="btn site-header__apply" href="/apply" data-magnetic><span data-magnetic-inner>Apply</span><span class="site-header__apply-arrow" aria-hidden="true" data-magnetic-inner><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg></span></a>
         <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path class="site-menu-toggle__open" d="M4 8h16M4 16h16" /><path class="site-menu-toggle__close" d="M6 6l12 12M18 6L6 18" /></svg>
         </button>
       </div>
     </header>
-    <main class="site-main container" data-outlet>${content}</main>
+    <main class="site-main" data-outlet>${content}</main>
     <footer class="site-footer">
       <div class="site-footer__inner">
         <div class="site-footer__top">

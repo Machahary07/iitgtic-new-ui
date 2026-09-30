@@ -62,7 +62,9 @@ const card = (item, i) => html`
   <li class="collection__item"${i >= PAGE_SIZE ? html` hidden` : ''}>
     <a class="collection__card" href="${item.href}">
       ${(({ tone, text }) => html`<span class="collection__badge" data-tone="${tone}">${text}</span>`)(status(item))}
-      <img class="collection__thumb" src="${item.image}" alt="" loading="lazy" decoding="async" />
+      ${item.logo
+        ? html`<img class="collection__logo" src="${item.logo}" alt="" loading="lazy" decoding="async" />`
+        : html`<img class="collection__thumb" src="${item.image}" alt="" loading="lazy" decoding="async" />`}
     </a>
     <p class="collection__name"><a href="${item.href}">${item.org ? `${item.title} · ${item.org}` : item.title}</a></p>
     <p class="collection__tags">${[TYPE_LABEL[item.type], ...item.tags].join(', ')}</p>

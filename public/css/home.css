@@ -58,6 +58,16 @@
   animation: hero-orbit 12s linear infinite;
 }
 
+/* 3D line-art objects: no card frame, just the drawing. */
+.hero__set .hero__object {
+  position: absolute;
+  width: 14vw; /* until placed */
+  height: auto;
+  opacity: 0.9;
+  filter: blur(0.6px);
+  animation: hero-orbit 14s linear infinite reverse;
+}
+
 /* Stagger photos so they don't circle in sync. */
 .hero__set img:nth-of-type(2n) {
   animation-direction: reverse;
@@ -247,19 +257,59 @@
   line-height: 1.3;
 }
 
-/* The label is one flex item centred in the button, so when the button
-   narrows it clips evenly from both sides (text-align would clip one side). */
+/* Only the body clips (the label is one flex item centred in it, so when the
+   button narrows it clips evenly from both sides). The ↗ circle sits outside
+   the body, on a layer above it, so it's never cut off. */
 .hero__cta {
+  position: relative;
   display: inline-flex;
-  justify-content: center;
   align-items: center;
-  overflow: hidden;
-  padding: 1.1rem 3.25rem;
+  gap: 1rem;
+  padding: 0.45rem 0.45rem 0.45rem 2.25rem;
   border-radius: 999px;
   background: #f3efe9;
   color: var(--color-charcoal);
   font-weight: 500;
   /* transitions come from [data-magnetic] in base.css */
+}
+
+.hero__cta-body {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ↗ in a dark circle at the right end, layered above the body. */
+.hero__cta-arrow {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  flex: none;
+  place-content: center;
+  width: 52px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--color-charcoal);
+  color: #f3efe9;
+}
+
+.hero__cta-arrow svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Hover: the arrow flies out top-right and back in from bottom-left
+   (cta-arrow keyframes in base.css). */
+.hero__cta:hover .hero__cta-arrow svg {
+  animation: cta-arrow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .hero__cta-label {
@@ -375,7 +425,11 @@
   }
 
   .hero__cta {
-    padding: 0.9rem 2.5rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.75rem;
+  }
+
+  .hero__cta-arrow {
+    width: 46px;
   }
 
   .hero__controls {
@@ -508,8 +562,10 @@
     transition: none;
   }
 
+  .hero__cta:hover .hero__cta-arrow svg,
   .association__track,
   .hero__float,
+  .hero__set .hero__object,
   .hero__set img {
     animation: none;
   }
