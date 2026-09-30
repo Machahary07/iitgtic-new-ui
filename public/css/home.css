@@ -49,6 +49,7 @@
 
 .hero__set img {
   position: absolute;
+  width: 10vw; /* until placed */
   height: auto;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgb(0 0 0 / 0.3);
@@ -85,8 +86,8 @@
 
 .hero__float {
   position: absolute;
-  padding: 1rem 1.25rem;
-  border-radius: 16px;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
   background: rgb(255 255 255 / 0.8);
   color: var(--color-charcoal);
   box-shadow: 0 20px 60px rgb(0 0 0 / 0.25);
@@ -98,18 +99,18 @@
 .hero__float p,
 .hero__float li {
   margin: 0;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .hero__float .hero__float-title {
-  margin-bottom: 0.75rem;
-  font-size: var(--fs-control);
+  margin-bottom: 0.5rem;
+  font-size: 17px;
   font-weight: 600;
 }
 
 .hero__float ul {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.4rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -122,7 +123,7 @@
 }
 
 .hero__float--list {
-  width: 340px;
+  width: 230px;
   filter: blur(2px);
   opacity: 0.5;
 }
@@ -130,15 +131,15 @@
 .hero__float--bubble {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  width: 460px;
-  padding: 1rem 2rem 1rem 1rem;
+  gap: 0.75rem;
+  width: 320px;
+  padding: 0.6rem 1.25rem 0.6rem 0.6rem;
   border-radius: 999px;
   animation-delay: -3s;
 }
 
 .hero__float--bubble p {
-  font-size: var(--fs-control);
+  font-size: 17px;
   line-height: 1.35;
 }
 
@@ -148,13 +149,13 @@
 }
 
 .hero__float--card {
-  width: 360px;
+  width: 240px;
   animation-delay: -6s;
 }
 
 .hero__swatch {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   border-radius: 4px;
 }
 
@@ -170,25 +171,25 @@
   flex: none;
   display: grid;
   place-content: center;
-  width: 64px;
+  width: 44px;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-accent);
   color: var(--color-white);
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .hero__check {
   display: grid;
   place-content: center;
-  width: 22px;
+  width: 16px;
   aspect-ratio: 1;
   border: 2px solid var(--color-accent);
   border-radius: 50%;
   color: var(--color-accent);
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 700;
 }
 
@@ -217,11 +218,15 @@
   display: grid;
   justify-items: center;
   text-align: center;
-  animation: hero-in 0.6s ease both;
 }
 
 .hero__slide[hidden] {
   display: none;
+}
+
+/* Hidden until the GSAP text animation is ready to play it in. */
+.hero[data-fx-pending] .hero__slides {
+  visibility: hidden;
 }
 
 .hero__title {
@@ -242,7 +247,13 @@
   line-height: 1.3;
 }
 
+/* The label is one flex item centred in the button, so when the button
+   narrows it clips evenly from both sides (text-align would clip one side). */
 .hero__cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   padding: 1.1rem 3.25rem;
   border-radius: 999px;
   background: #f3efe9;
@@ -251,15 +262,13 @@
   transition: background 0.2s;
 }
 
-.hero__cta:hover {
-  background: var(--color-white);
+.hero__cta-label {
+  flex: none;
+  white-space: nowrap; /* inline, so the split letters keep their spaces */
 }
 
-@keyframes hero-in {
-  from {
-    opacity: 0;
-    translate: 0 16px;
-  }
+.hero__cta:hover {
+  background: var(--color-white);
 }
 
 /* Controls: arrows + dots, the active dot fills as a progress bar */
@@ -355,15 +364,23 @@
   }
 
   .hero__title {
-    font-size: clamp(48px, 12vw, var(--fs-hero));
+    font-size: clamp(34px, 11vw, var(--fs-hero));
+    overflow-wrap: break-word;
   }
 
   .hero__tagline {
+    max-width: 100%;
+    margin: 1.25rem 0 2rem;
     font-size: var(--fs-tagline);
+  }
+
+  .hero__cta {
+    padding: 0.9rem 2.5rem;
   }
 
   .hero__controls {
     gap: 1.25rem;
+    margin-top: 2rem;
   }
 
   .hero__arrow {
@@ -375,14 +392,125 @@
   }
 }
 
+/* "In association with" logo marquee, on white below the hero. */
+.association {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  padding: 4rem 1.5rem;
+  background: var(--color-white);
+}
+
+.association__eyebrow {
+  margin: 0;
+  color: rgb(26 26 26 / 0.56);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.association__window {
+  width: min(920px, 100%);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.association__track {
+  display: flex;
+  width: max-content;
+  animation: association-scroll 24s linear infinite;
+}
+
+.association__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.25rem, 0.8vw, 0.75rem);
+  padding-right: clamp(0.25rem, 0.8vw, 0.75rem);
+}
+
+.association__item {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: clamp(112px, 14vw, 168px);
+  height: 88px;
+}
+
+.association__item img {
+  max-width: 100%;
+  max-height: 72px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+@keyframes association-scroll {
+  to {
+    translate: -50% 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .association {
+    gap: 1rem;
+    padding: 3rem 1rem;
+  }
+
+  .association__eyebrow {
+    font-size: 16px;
+  }
+
+  .association__group {
+    gap: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .association__item {
+    width: 104px;
+    height: 70px;
+  }
+
+  .association__item img {
+    max-height: 54px;
+  }
+}
+
+/* Small phones: keep the slider controls inside the screen. */
+@media (max-width: 400px) {
+  .hero__controls {
+    gap: 0.75rem;
+  }
+
+  .hero__arrow {
+    width: 44px;
+  }
+
+  .hero__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero__dots {
+    gap: 8px;
+  }
+
+  .hero__dot[aria-current] {
+    width: 56px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero__set {
     transition: none;
   }
 
+  .association__track,
   .hero__float,
-  .hero__set img,
-  .hero__slide {
+  .hero__set img {
     animation: none;
   }
 }

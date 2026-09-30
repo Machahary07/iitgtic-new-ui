@@ -78,6 +78,7 @@
 @media (max-width: 800px) {
   .dash {
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
 
   .dash__sidebar {
@@ -88,8 +89,10 @@
   }
 
   .dash__nav {
+    flex: none;
     flex-direction: row;
     overflow-x: auto;
+    scrollbar-width: none;
   }
 
   .dash__nav a {

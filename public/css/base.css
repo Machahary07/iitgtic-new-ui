@@ -118,20 +118,16 @@ p {
   -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
 }
 
+/* Plain white pill, sized like the nav links. */
 .site-header__apply {
   justify-self: end;
-  padding: 0.75rem 2rem;
+  padding: 0.6rem 1.25rem;
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: var(--color-white);
   color: var(--color-charcoal);
-  transition: background 0.2s, color 0.2s;
-}
-
-.site-header__apply:hover {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-white);
+  font-size: var(--fs-nav);
+  line-height: 1;
 }
 
 .site-header--over .site-header__apply {
@@ -160,6 +156,21 @@ p {
 .site-logo img {
   height: var(--logo-h);
   width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Dark-text logo on white; white-text logo over the hero or the open phone menu. */
+.site-logo__dark,
+.site-header--over .site-logo__light,
+.site-header[data-menu-open] .site-logo__light {
+  display: none;
+}
+
+.site-header--over .site-logo__dark,
+.site-header[data-menu-open] .site-logo__dark {
+  display: block;
 }
 
 .site-nav {
@@ -185,24 +196,21 @@ p {
   color: var(--color-primary);
 }
 
-.nav-menu__panel {
-  display: none;
-}
-
 .nav-menu__card {
   margin: 0;
-  padding: 0.5rem;
+  padding: 0;
   list-style: none;
 }
 
 .nav-menu__card a {
   display: block;
-  padding: 0.5rem 0.75rem;
-  border-radius: calc(var(--radius) - 2px);
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
   color: var(--color-charcoal);
   font-size: var(--fs-nav);
   text-decoration: none;
   white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .nav-menu__card a:hover {
@@ -215,15 +223,37 @@ p {
 
 .site-menu-toggle {
   display: none;
-  padding: 0.5rem 1rem;
+  place-content: center;
+  width: 44px;
+  aspect-ratio: 1;
+  padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 50%;
   background: none;
   cursor: pointer;
   color: var(--color-charcoal);
-  font: inherit;
-  font-size: var(--fs-control);
-  font-weight: 600;
+}
+
+.site-menu-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.site-menu-toggle__close,
+.site-menu-toggle[aria-expanded='true'] .site-menu-toggle__open {
+  display: none;
+}
+
+.site-menu-toggle[aria-expanded='true'] .site-menu-toggle__close {
+  display: inline;
+}
+
+.site-nav__extra {
+  display: none;
 }
 
 /* Desktop: a dropdown opens on hover (or keyboard focus) and closes once the
@@ -242,127 +272,427 @@ p {
     color: var(--color-primary);
   }
 
-  .nav-menu:hover .nav-menu__panel,
-  .nav-menu:has(:focus-visible) .nav-menu__panel {
-    display: block;
-  }
-
-  /* Top padding bridges the gap so the pointer can travel to the card. */
+  /* Top padding bridges the gap so the pointer can travel to the card.
+     Closing waits a beat so a pointer slipping off briefly doesn't flicker it. */
   .nav-menu__panel {
     position: absolute;
     top: 100%;
     left: 50%;
     translate: -50% 0;
     z-index: 20;
-    padding-top: 0.75rem;
+    padding-top: 1rem;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.2s ease 0.08s,
+      visibility 0s linear 0.28s;
   }
 
   .nav-menu__card {
-    min-width: 20rem;
+    min-width: 18rem;
+    padding: 0.5rem;
     background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    box-shadow: 0 12px 32px rgb(0 0 0 / 0.12);
+    border: 1px solid rgb(0 0 0 / 0.06);
+    border-radius: 16px;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.06),
+      0 18px 40px rgb(0 0 0 / 0.14);
+    transform: translateY(8px) scale(0.98);
+    transform-origin: top center;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) 0.08s;
+  }
+
+  .nav-menu__card li {
+    opacity: 0;
+    translate: 0 4px;
+    transition:
+      opacity 0.2s ease,
+      translate 0.2s ease;
+  }
+
+  .nav-menu:hover .nav-menu__panel,
+  .nav-menu:has(:focus-visible) .nav-menu__panel {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-menu:hover .nav-menu__card,
+  .nav-menu:has(:focus-visible) .nav-menu__card {
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* Links ripple in one after another (--i is each item's index). */
+  .nav-menu:hover .nav-menu__card li,
+  .nav-menu:has(:focus-visible) .nav-menu__card li {
+    opacity: 1;
+    translate: 0;
+    transition-delay: calc(var(--i) * 25ms + 40ms);
   }
 }
 
+/* Main slides up over the footer, which waits pinned at the bottom of the
+   viewport underneath: a "reveal" footer. Main needs an opaque background. */
 .site-main {
+  position: relative;
+  z-index: 1;
   padding-block: 3rem;
   min-height: 60vh;
+  background: var(--color-bg);
 }
 
 .site-footer {
-  border-top: 1px solid var(--color-border);
-  color: var(--color-gray);
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  padding: 2.5rem 30px 2rem;
+  background: var(--color-black);
+  color: var(--color-white);
   font-size: var(--fs-footer-link);
-}
-
-.site-footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-block: 1.5rem;
-}
-
-.site-footer nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  container-type: inline-size;
 }
 
 .site-footer a {
   color: inherit;
   font-size: var(--fs-footer-link);
+  text-decoration: none;
 }
 
-/* Phone: full-screen menu showing the three groups; tap one to reveal its links. */
+.site-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem 2rem;
+}
+
+.site-footer__label {
+  margin: 0;
+  font-size: var(--fs-footer-link);
+}
+
+.site-footer__explore {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 3.5rem;
+}
+
+.site-footer__explore a {
+  color: rgb(255 255 255 / 0.55);
+  transition: color 0.2s ease;
+}
+
+.site-footer__explore a:hover {
+  color: var(--color-white);
+}
+
+/* Big left-aligned wordmark sized to span the footer's width. */
+.site-footer__wordmark {
+  margin: 2.5rem 0 0;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.3);
+  font-family: var(--font-display);
+  /* The word is ~3.02em wide in Anek Latin, so this fills the footer exactly. */
+  font-size: calc(100cqw / 3.02);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  padding-top: 2rem;
+}
+
+.site-footer__logo img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
+.site-footer__legal {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 0.75rem 2rem;
+}
+
+.site-footer__legal a,
+.site-footer__copy {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-footer__legal a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.site-footer__copy {
+  margin: 0;
+  color: rgb(255 255 255 / 0.55);
+  font-size: var(--fs-footer-link);
+}
+
+/* Phone: full-screen menu. The groups are stacked pills anchored to the
+   bottom; they rise in one after another. Tapping a pill expands its links
+   (at 66% of the pill's font size) inside it. */
 @media (max-width: 900px) {
   .site-header {
     --header-pad: 1rem;
-    --logo-h: 40px;
+    --logo-h: 36px;
+    --menu-fs: 28px;
   }
 
   .site-header__inner {
-    grid-template-columns: 1fr auto auto;
-    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0.6rem;
   }
 
   .site-menu-toggle {
-    display: block;
+    display: grid;
   }
 
-  .site-header__apply {
-    padding: 0.5rem 1.25rem;
+  .site-main {
+    padding-block: 2rem;
   }
 
-  .site-nav {
-    display: none;
-    /* Fills the screen below the header bar. */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: calc(100dvh - 100%);
-    z-index: 20;
-    flex-direction: column;
+  .site-footer {
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .site-footer__explore {
+    gap: 0.5rem 1.5rem;
+  }
+
+  .site-footer__legal {
+    flex-basis: 100%;
     justify-content: flex-start;
-    gap: 0;
-    padding: 1rem 1rem 2rem;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .site-header--over .site-menu-toggle,
+  .site-header[data-menu-open] .site-menu-toggle {
+    border-color: transparent;
+    background: rgb(255 255 255 / 0.9);
+    color: var(--color-charcoal);
+  }
+
+  /* Covers the whole screen, behind the header's logo/Apply/close, and
+     fades in and out. Content hides as it scrolls up under the header. */
+  .site-nav {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6rem 1rem 1.25rem;
     overflow-y: auto;
-    background: var(--color-bg);
+    overscroll-behavior: contain;
+    mask-image: linear-gradient(transparent 4.5rem, #000 6rem);
+    -webkit-mask-image: linear-gradient(transparent 4.5rem, #000 6rem);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
   }
 
   .site-header[data-menu-open] .site-nav {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Menu backdrop: its own layer under the links, so the mask above only
+     fades the scrolling links, not the background. */
+  .site-header::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(165deg, #1b2d63, #0d1b3d 70%);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  .site-header[data-menu-open]::after {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Pushes the stack to the bottom; unlike justify-content: flex-end it
+     still scrolls when an expanded group is taller than the screen. */
+  .nav-menu:first-child {
+    margin-top: auto;
   }
 
   body:has(.site-header[data-menu-open]) {
     overflow: hidden;
   }
 
-  .nav-menu {
-    border-bottom: 1px solid var(--color-border);
+  .site-header[data-menu-open] :is(.nav-menu, .site-nav__extra) {
+    animation: nav-stack-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--g) * 70ms + 80ms);
   }
 
-  .nav-menu__trigger {
+  .nav-menu {
+    flex: none;
+    border-radius: 40px;
+    background: rgb(255 255 255 / 0.12);
+    transition: background 0.2s ease;
+  }
+
+  .nav-menu:has([aria-expanded='true']) {
+    background: rgb(255 255 255 / 0.18);
+  }
+
+  .nav-menu__trigger,
+  .site-header--over .nav-menu__trigger {
     width: 100%;
-    padding: 1.25rem 0;
+    padding: 1.35rem 1.75rem;
+    color: var(--color-white);
+    font-size: var(--menu-fs);
+    font-weight: 500;
     text-align: left;
-    font-size: var(--fs-nav);
+  }
+
+  .nav-menu__trigger[data-active] {
+    color: var(--color-primary);
+  }
+
+  /* Chevron: points down, turns to point up as the group opens, slowly and
+     in step with the accordion. */
+  .nav-menu__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-menu__trigger::after {
+    content: '';
+    flex: none;
+    width: 0.38em;
+    height: 0.38em;
+    margin-right: 0.2em;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-menu__trigger[aria-expanded='true']::after {
+    transform: translateY(15%) rotate(-135deg);
+  }
+
+  /* Accordion: rows animate 0fr -> 1fr for a smooth open/close. */
+  .nav-menu__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-menu__trigger[aria-expanded='true'] + .nav-menu__panel {
-    display: block;
+    grid-template-rows: 1fr;
   }
 
   .nav-menu__card {
-    padding: 0 0 1rem;
+    min-height: 0;
+    overflow: hidden;
+    padding-inline: 1.75rem;
+  }
+
+  .nav-menu__card li:last-child {
+    padding-bottom: 1.25rem;
   }
 
   .nav-menu__card a {
-    padding-inline: 0;
+    padding: 0.35rem 0;
+    color: rgb(255 255 255 / 0.8);
+    font-size: calc(var(--menu-fs) * 0.66);
     white-space: normal;
+  }
+
+  .nav-menu__card a:hover {
+    background: none;
+    color: var(--color-white);
+  }
+
+  .site-nav__extra {
+    display: block;
+    flex: none;
+    margin-top: 0.75rem;
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .site-nav__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .site-nav__social a {
+    display: grid;
+    place-content: center;
+    width: 46px;
+    aspect-ratio: 1;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 50%;
+    color: var(--color-white);
+  }
+
+  .site-nav__social svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linejoin: round;
+  }
+
+  .site-nav__legal {
+    margin: 1rem 0 0;
+    font-size: 14px;
+  }
+
+  .site-nav__legal a {
+    color: inherit;
+    font-size: inherit;
+  }
+}
+
+@keyframes nav-stack-in {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-menu__panel,
+  .nav-menu__card,
+  .nav-menu__card li,
+  .nav-menu__trigger::after {
+    transition: none !important;
+  }
+
+  .site-nav,
+  .nav-menu,
+  .site-nav__extra {
+    animation: none !important;
   }
 }
 
@@ -370,6 +700,7 @@ p {
 .auth {
   min-height: 100vh;
   display: grid;
+  grid-template-columns: min(420px, 100%);
   place-content: center;
   justify-items: center;
   gap: 1.5rem;
