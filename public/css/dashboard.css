@@ -1,0 +1,119 @@
+/* Founder + TIC admin dashboard layout */
+.dash {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--admin-bg);
+  color: var(--admin-ink);
+}
+
+.dash__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1rem;
+  background: var(--admin-surface);
+  border-right: 1px solid var(--admin-field-border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.dash__brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-control);
+  color: var(--admin-ink);
+  text-decoration: none;
+}
+
+.dash__brand span {
+  color: var(--admin-accent);
+}
+
+.dash__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.dash__nav a {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  color: var(--admin-ink-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dash__nav a:hover {
+  background: var(--admin-sunken);
+}
+
+.dash__nav a[aria-current='page'] {
+  background: var(--status-info-bg);
+  color: var(--admin-accent);
+}
+
+.dash__back {
+  color: var(--admin-ink-3);
+  font-size: var(--fs-control);
+  text-decoration: none;
+}
+
+.dash__main {
+  padding: 2rem;
+  min-width: 0;
+}
+
+.dash .muted {
+  color: var(--admin-ink-3);
+}
+
+.dash a:not([class]) {
+  color: var(--admin-accent);
+}
+
+@media (max-width: 800px) {
+  .dash {
+    grid-template-columns: 1fr;
+  }
+
+  .dash__sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--admin-field-border);
+  }
+
+  .dash__nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .dash__nav a {
+    white-space: nowrap;
+  }
+
+  .dash__main {
+    padding: 1.25rem;
+  }
+}
+
+/* Status pills */
+.pill {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--status-neutral-bg);
+  color: var(--status-neutral-fg);
+}
+
+.pill--good { background: var(--status-good-bg); color: var(--status-good-fg); }
+.pill--warning { background: var(--status-warning-bg); color: var(--status-warning-fg); }
+.pill--bad { background: var(--status-bad-bg); color: var(--status-bad-fg); }
+.pill--info { background: var(--status-info-bg); color: var(--status-info-fg); }
+.pill--violet { background: var(--status-violet-bg); color: var(--status-violet-fg); }

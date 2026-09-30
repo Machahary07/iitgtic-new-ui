@@ -1,0 +1,26 @@
+{
+  "name": "iitgtic-new-ui",
+  "version": "1.0.0",
+  "description": "IITG TIC new UI — vanilla JS frontend served by a zero-dependency Node.js server",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.24.0",
+  "type": "module"
+}

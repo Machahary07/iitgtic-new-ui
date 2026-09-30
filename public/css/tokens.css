@@ -1,0 +1,57 @@
+/* Design tokens — see pages.md (Colors / Fonts). */
+:root {
+  /* Brand */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-primary: #00b451;
+  --color-accent: #004ebc;
+  --color-charcoal: #231f20;
+  --color-gray: #686a74;
+  --color-muted: rgb(0 0 0 / 0.6);
+  --color-subtle: rgb(0 0 0 / 0.08);
+  --color-border: rgb(0 0 0 / 0.12);
+
+  --color-bg: var(--color-white);
+  --color-text: var(--color-black);
+
+  /* Founder + TIC admin dashboards */
+  --admin-bg: #f1f2f5;
+  --admin-surface: #ffffff;
+  --admin-sunken: #f4f5f8;
+  --admin-field-border: #cdd2da;
+  --admin-ink: #14171a;
+  --admin-ink-2: #4d545c;
+  --admin-ink-3: #878e97;
+  --admin-accent: #2050d4;
+
+  /* Dashboard status (background / text) */
+  --status-good-bg: #e3f7ea;
+  --status-good-fg: #0b6b36;
+  --status-warning-bg: #fdf1da;
+  --status-warning-fg: #7a5405;
+  --status-bad-bg: #fde7e7;
+  --status-bad-fg: #9a201f;
+  --status-info-bg: #e6edfd;
+  --status-info-fg: #1d3f96;
+  --status-violet-bg: #eee9fd;
+  --status-violet-fg: #4b2f9e;
+  --status-neutral-bg: #eef0f4;
+  --status-neutral-fg: #454b54;
+
+  /* Fonts */
+  --font-sans: 'Open Sans', 'Mukta', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Anek Latin', 'Mukta', 'Open Sans', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Type scale — minimum sizes */
+  --fs-footer-link: 20px;
+  --fs-body: 24px;
+  --fs-tagline: 24px;
+  --fs-nav: 20px;
+  --fs-control: 24px; /* buttons and links */
+  --fs-hero: 112px;
+
+  /* Layout */
+  --container: 1200px;
+  --radius: 8px;
+}
