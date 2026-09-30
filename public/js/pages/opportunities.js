@@ -1,11 +1,10 @@
-import { html } from '../lib/html.js';
+import { renderCollection, mountCollection } from './opportunities/collection.js';
 
 export const title = 'Opportunities';
 
 // Route: /opportunities
 export default function page() {
-  return html`
-    <section class="page">
-      <h1>Opportunities</h1>
-    </section>`;
+  return renderCollection('all');
 }
+
+export const mount = mountCollection;

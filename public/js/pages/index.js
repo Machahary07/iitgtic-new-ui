@@ -1,5 +1,6 @@
 import { html } from '../lib/html.js';
 import { loadGsap } from '../lib/gsap.js';
+import { applyCta } from '../components/apply-cta.js';
 
 export const title = 'Home';
 
@@ -128,7 +129,7 @@ export default function page() {
             <div class="hero__slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${SLIDES.length}"${i ? html` hidden` : ''}>
               <h1 class="hero__title">${title}</h1>
               <p class="tagline hero__tagline" style="--half: ${Math.ceil(tagline.length / 2) + 2}ch">${tagline}</p>
-              <a class="btn hero__cta" href="${href}"><span class="hero__cta-label">${label}</span></a>
+              <a class="btn hero__cta" href="${href}" data-magnetic><span class="hero__cta-label" data-magnetic-inner>${label}</span></a>
             </div>`,
         )}
       </div>
@@ -147,7 +148,8 @@ export default function page() {
         </button>
       </div>
     </section>
-    ${associationMarquee()}`;
+    ${associationMarquee()}
+    ${applyCta()}`;
 }
 
 // Min space between any two items, and around the text. Items orbit on a

@@ -19,7 +19,6 @@ These 67 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /auth/reset-password
 /contact
 /cookies
-/events
 /events/[slug]
 /founder
 /founder/activity
@@ -39,6 +38,7 @@ These 67 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /login
 /opportunities
 /opportunities/[id]
+/opportunities/events
 /opportunities/startup-jobs
 /opportunities/tic-jobs
 /partners
@@ -78,6 +78,8 @@ These paths have a `+page.server.ts` redirect file but no matching `+page.svelte
 
 - `/tic-admin/ai` → `/tic-admin?assistant=open`
 - `/tic-admin/home-page` → `/tic-admin/content/homeHero`
+
+`/events` now also redirects to `/opportunities/events`: the events list is a filter of Opportunities, alongside `/opportunities/startup-jobs` and `/opportunities/tic-jobs`. Event detail pages stay at `/events/[slug]`.
 
 API endpoints (`+server.ts`) and `/sitemap.xml` are not page routes, so they are not listed here.
 

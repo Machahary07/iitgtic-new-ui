@@ -259,7 +259,7 @@
   background: #f3efe9;
   color: var(--color-charcoal);
   font-weight: 500;
-  transition: background 0.2s;
+  /* transitions come from [data-magnetic] in base.css */
 }
 
 .hero__cta-label {

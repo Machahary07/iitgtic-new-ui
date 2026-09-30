@@ -34,7 +34,7 @@ const NAV = [
       ['/opportunities', 'All opportunities'],
       ['/opportunities/startup-jobs', 'Startup jobs'],
       ['/opportunities/tic-jobs', 'TIC jobs'],
-      ['/events', 'Events'],
+      ['/opportunities/events', 'Events'],
       ['/about/blog', 'Blog'],
       ['/about/faq', 'FAQ'],
     ],
@@ -95,6 +95,28 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && header) setMenuOpen(header, false);
 });
 
+// Footer parallax: --reveal goes 0 -> 1 as the page slides up off the
+// footer; CSS uses it to let the footer's layers settle at different speeds.
+const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+let revealFrame;
+function updateReveal() {
+  revealFrame = undefined;
+  const footer = document.querySelector('.site-footer');
+  const main = document.querySelector('.site-main');
+  if (!footer || !main || still.matches) return;
+  // The top --tuck px sit under the page (negative margin) and never show.
+  const tuck = -parseFloat(getComputedStyle(footer).marginTop) || 0;
+  const shown = window.innerHeight - main.getBoundingClientRect().bottom;
+  const progress = Math.min(Math.max(shown / (footer.offsetHeight - tuck), 0), 1);
+  footer.style.setProperty('--reveal', progress.toFixed(3));
+}
+const queueReveal = () => (revealFrame ??= requestAnimationFrame(updateReveal));
+window.addEventListener('scroll', queueReveal, { passive: true });
+window.addEventListener('resize', queueReveal);
+new MutationObserver(queueReveal).observe(document.body, { childList: true, subtree: true });
+
+const DARK_PAGES = ['/', '/opportunities', '/opportunities/startup-jobs', '/opportunities/tic-jobs', '/opportunities/events'];
+
 const navMenu = ({ label, links }, path, i) => {
   const active = links.some(([href]) => isActive(path, href, true));
   return html`
@@ -109,8 +131,9 @@ const navMenu = ({ label, links }, path, i) => {
 };
 
 export default function siteLayout(content, { path }) {
-  // On the home page the header floats transparently over the dark hero.
-  const overHero = path === '/';
+  // On dark pages (home hero, opportunities collection) the header floats
+  // transparently over the page with white text.
+  const overHero = DARK_PAGES.includes(path);
   return html`
     <header class="site-header${overHero ? ' site-header--over' : ''}">
       <div class="site-header__inner">
@@ -132,7 +155,7 @@ export default function siteLayout(content, { path }) {
             <p class="site-nav__legal">© ${new Date().getFullYear()} IITG Technology Incubation Centre · <a href="/privacy">Privacy</a></p>
           </div>
         </nav>
-        <a class="btn site-header__apply" href="/apply">Apply</a>
+        <a class="btn site-header__apply" href="/apply" data-magnetic><span data-magnetic-inner>Apply</span></a>
         <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path class="site-menu-toggle__open" d="M4 8h16M4 16h16" /><path class="site-menu-toggle__close" d="M6 6l12 12M18 6L6 18" /></svg>
         </button>
@@ -140,19 +163,21 @@ export default function siteLayout(content, { path }) {
     </header>
     <main class="site-main container" data-outlet>${content}</main>
     <footer class="site-footer">
-      <div class="site-footer__top">
-        <p class="site-footer__label">Technology Incubation Centre, IIT Guwahati</p>
-        <nav class="site-footer__explore" aria-label="Explore">
-          ${FOOTER_EXPLORE.map(([href, label]) => html`<a href="${href}"${href.startsWith('http') ? html` target="_blank" rel="noopener"` : ''}>${label}</a>`)}
-        </nav>
-      </div>
-      <p class="site-footer__wordmark" aria-hidden="true">IITG-TIC</p>
-      <div class="site-footer__bottom">
-        <a class="site-footer__logo" href="/"><img src="/img/tic-logo-on-dark.svg" alt="IITG Technology Incubation Centre" width="250" height="64" /></a>
-        <nav class="site-footer__legal" aria-label="Legal">
-          ${FOOTER_LINKS.map(([href, label]) => html`<a href="${href}">${label}</a>`)}
-        </nav>
-        <p class="site-footer__copy">© ${new Date().getFullYear()}</p>
+      <div class="site-footer__inner">
+        <div class="site-footer__top">
+          <p class="site-footer__label">Technology Incubation Centre, IIT Guwahati</p>
+          <nav class="site-footer__explore" aria-label="Explore">
+            ${FOOTER_EXPLORE.map(([href, label]) => html`<a href="${href}"${href.startsWith('http') ? html` target="_blank" rel="noopener"` : ''}>${label}</a>`)}
+          </nav>
+        </div>
+        <p class="site-footer__wordmark" aria-hidden="true">IITG-TIC</p>
+        <div class="site-footer__bottom">
+          <a class="site-footer__logo" href="/"><img src="/img/tic-logo-on-dark.svg" alt="IITG Technology Incubation Centre" width="250" height="64" /></a>
+          <nav class="site-footer__legal" aria-label="Legal">
+            ${FOOTER_LINKS.map(([href, label]) => html`<a href="${href}">${label}</a>`)}
+          </nav>
+          <p class="site-footer__copy">© ${new Date().getFullYear()}</p>
+        </div>
       </div>
     </footer>`;
 }
