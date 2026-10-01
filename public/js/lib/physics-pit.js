@@ -1,11 +1,11 @@
 // Gravity pit: every [data-physics-pit] on the page gets a Matter.js world
 // whose bodies mirror its .physics-shape children. The shapes wait above the
-// pit (it clips them) and drop in when it scrolls into view (ScrollTrigger); after that they
+// pit (it clips them) and drop in when it scrolls into view; after that they
 // can be dragged and thrown; scrolling alone never moves them. Matter steps on
 // the GSAP ticker and each frame copies body positions onto the DOM. Without
 // the libraries, or with reduced motion, the shapes simply sit in a wrapped
 // row (base.css).
-import { loadScrollTrigger } from './gsap.js';
+import { loadGsap } from './gsap.js';
 
 const MATTER = 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';
 const WALL = 200; // thickness of the invisible floor and side walls
@@ -25,7 +25,7 @@ const loadMatter = () =>
   }));
 
 async function createPit(pit) {
-  const [Matter, { gsap, ScrollTrigger }] = await Promise.all([loadMatter(), loadScrollTrigger()]);
+  const [Matter, { gsap }] = await Promise.all([loadMatter(), loadGsap()]);
   if (!pit.isConnected) return;
   const { Engine, Bodies, Body, Composite, Constraint, Vertices, Sleeping } = Matter;
   const box = (w, h) => Vertices.fromPath(`0 0 ${w} 0 ${w} ${h} 0 ${h}`);
@@ -124,16 +124,14 @@ async function createPit(pit) {
   };
   gsap.ticker.add(tick);
 
+  // Observe the actual pit instead of cached scroll coordinates: event images
+  // above this CTA may load later and move it after the page has rendered.
   let dropped = false;
-  const trigger = ScrollTrigger.create({
-    trigger: pit,
-    start: 'top 85%',
-    end: 'bottom top',
-    onToggle: (self) => {
-      if (self.isActive) dropped = true;
-      running = dropped && self.isActive;
-    },
+  const visibility = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) dropped = true;
+    running = dropped && entry.isIntersecting;
   });
+  visibility.observe(pit);
 
   // Keep the walls on the pit's edges and pull stray shapes back inside.
   const resize = new ResizeObserver(() => {
@@ -155,7 +153,7 @@ async function createPit(pit) {
 
   function destroy() {
     gsap.ticker.remove(tick);
-    trigger.kill();
+    visibility.disconnect();
     resize.disconnect();
     Composite.clear(engine.world, false);
     Engine.clear(engine);

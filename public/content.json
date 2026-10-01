@@ -25,95 +25,35 @@
   ],
   "opportunities": [
     {
-      "type": "startup-job",
-      "id": "sample-startup-frontend-developer",
-      "title": "Frontend Developer",
-      "org": "Sample Startup",
-      "date": "2026-09-28",
-      "tags": [
-        "Full-time",
-        "Guwahati"
-      ],
-      "href": "/opportunities/sample-startup-frontend-developer",
-      "dummy": true,
-      "deadline": "2026-10-04",
-      "logo": "/img/logos/startup-placeholder.svg"
-    },
-    {
-      "type": "tic-job",
-      "id": "tic-program-associate",
-      "title": "Program Associate",
-      "org": "IITG-TIC",
-      "date": "2026-09-24",
-      "tags": [
-        "Full-time",
-        "On-site"
-      ],
-      "href": "/opportunities/tic-program-associate",
-      "dummy": true,
-      "deadline": "2026-10-31",
-      "logo": "/img/tic-logo.svg"
-    },
-    {
-      "type": "startup-job",
-      "id": "sample-startup-research-intern",
-      "title": "Research Intern",
-      "org": "Sample Startup",
-      "date": "2026-08-20",
-      "deadline": "2026-09-15",
-      "tags": [
-        "Internship",
-        "3 months"
-      ],
-      "href": "/opportunities/sample-startup-research-intern",
-      "dummy": true,
-      "logo": "/img/logos/startup-placeholder.svg"
-    },
-    {
       "type": "event",
-      "title": "Founders Demo Day",
-      "date": "2026-11-14",
-      "tags": [
-        "Demo day",
-        "Pitching"
-      ],
-      "image": "/img/hero/incubation-5.jpg",
-      "href": "/events/founders-demo-day-2026",
-      "dummy": true
-    },
-    {
-      "type": "event",
-      "title": "DeepTech Product Workshop",
-      "date": "2026-09-30",
-      "endDate": "2026-10-02",
-      "tags": [
-        "Workshop",
-        "3 days"
-      ],
-      "image": "/img/hero/incubation-6.jpg",
-      "href": "/events/deeptech-product-workshop-2026",
-      "dummy": true
-    },
-    {
-      "type": "event",
-      "title": "mc² + IGNITE",
+      "title": "mc² + IGNITE: strengthening the startup ecosystem",
       "date": "2026-09-10",
       "tags": [
         "Energy innovation",
         "Accelerator"
       ],
-      "image": "/img/hero/incubation-1.jpg",
+      "image": "/img/events/mc2-ignite-2026-1.webp",
       "href": "/events/mc2-ignite-2026"
     },
     {
       "type": "event",
-      "title": "AI-Assisted Coding Training",
+      "title": "Bharat Innovates 2026, Nice",
+      "date": "2026-06-14",
+      "endDate": "2026-06-16",
+      "tags": ["Startup showcase", "Clean energy"],
+      "image": "/img/events/bharat-innovates-2026-1.webp",
+      "href": "/events/bharat-innovates-2026"
+    },
+    {
+      "type": "event",
+      "title": "AI-Assisted Coding Training Program",
       "date": "2026-06-01",
+      "endDate": "2026-06-05",
       "tags": [
         "Training",
         "5 days"
       ],
-      "image": "/img/hero/opportunities-5.jpg",
+      "image": "/img/events/ai-assisted-coding-training-2026-1.webp",
       "href": "/events/ai-assisted-coding-training-2026"
     },
     {
@@ -123,7 +63,7 @@
       "tags": [
         "Pitching competition"
       ],
-      "image": "/img/hero/opportunities-1.jpg",
+      "image": "/img/events/battle-blitz-2026-1.webp",
       "href": "/events/battle-blitz-2026"
     },
     {
@@ -133,7 +73,7 @@
       "tags": [
         "Hackathon"
       ],
-      "image": "/img/hero/opportunities-4.jpg",
+      "image": "/img/events/maruti-suzuki-innovation-hackathon-2026-1.webp",
       "href": "/events/maruti-suzuki-innovation-hackathon-2026"
     }
   ],
@@ -687,7 +627,7 @@
           {
             "name": "Opportunity and event details",
             "icon": "calendar",
-            "state": "todo",
+            "state": "done",
             "pages": 2
           },
           {

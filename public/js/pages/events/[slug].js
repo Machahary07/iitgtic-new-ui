@@ -1,14 +1,7 @@
-import { html } from '../../lib/html.js';
+import { eventPage, mountDetail } from '../../components/opportunity-detail.js';
 
 export const title = 'Event';
 
 // Route: /events/[slug]
-export default function page({ params }) {
-  return html`
-    <section class="page">
-      <h1>Event</h1>
-      <dl class="muted">
-        <dt>slug</dt><dd><code>${params.slug}</code></dd>
-      </dl>
-    </section>`;
-}
+export default ({ params }) => eventPage(params.slug);
+export const mount = mountDetail;

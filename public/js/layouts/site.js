@@ -170,8 +170,9 @@ export default function siteLayout(content, { path }) {
   // On dark pages (home hero, opportunities collection) the header floats
   // transparently over the page with white text.
   const overHero = DARK_PAGES.includes(path);
+  const clearHeader = CLEAR_PAGES.includes(path) || path.startsWith('/events/') || (path.startsWith('/opportunities/') && !overHero);
   return html`
-    <header class="site-header${overHero ? ' site-header--over' : ''}${CLEAR_PAGES.includes(path) ? ' site-header--clear' : ''}">
+    <header class="site-header${overHero ? ' site-header--over' : ''}${clearHeader ? ' site-header--clear' : ''}">
       <div class="site-header__inner">
         <a class="site-logo" href="/">
           <img class="site-logo__light" src="/img/tic-logo.svg" alt="IITG Technology Incubation Centre" width="250" height="64" />

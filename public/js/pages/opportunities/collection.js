@@ -8,8 +8,8 @@ const OPPORTUNITIES = CONTENT.opportunities;
 // is its own route, so the filters are plain links.
 export const FILTERS = [
   { key: 'all', label: 'All', href: '/opportunities', empty: 'Nothing listed right now.' },
-  { key: 'startup-job', label: 'Startup jobs', href: '/opportunities/startup-jobs', empty: 'No startup jobs open right now.' },
-  { key: 'tic-job', label: 'TIC jobs', href: '/opportunities/tic-jobs', empty: 'No TIC jobs open right now.' },
+  { key: 'startup-job', label: 'Startup jobs', href: '/opportunities/startup-jobs', empty: 'No open startup roles right now. Check back soon.' },
+  { key: 'tic-job', label: 'TIC jobs', href: '/opportunities/tic-jobs', empty: 'No openings at the centre right now. New roles will appear here.' },
   { key: 'event', label: 'Events', href: '/opportunities/events', empty: 'No events listed right now.' },
 ];
 
@@ -75,15 +75,12 @@ export function renderCollection(filterKey) {
   const items = OPPORTUNITIES.filter((o) => filterKey === 'all' || o.type === filterKey).sort((a, b) =>
     b.date.localeCompare(a.date),
   );
-  // All opportunities counts only what's still open (open or closing jobs,
-  // upcoming or ongoing events); closed and past items are listed but not
-  // counted. A filter counts everything in it.
-  const count = filterKey === 'all' ? items.filter((o) => status(o).open).length : items.length;
+  const count = items.length;
   return html`
     <section class="collection">
       <header class="collection__head">
         <h1 class="collection__title">${filterKey === 'all' ? 'Opportunities' : filter.label}</h1>
-        <p class="collection__count" aria-label="${count} ${filterKey === 'all' ? 'open' : 'listed'}">${count}</p>
+        <p class="collection__count" aria-label="${count} listed">${count}</p>
       </header>
 
       <div class="collection__bar">
