@@ -1,0 +1,770 @@
+/* Team, governing body, committee, coordinators, mentors and FAQ
+   (components/people-page.js): a simple header on warm off-white, then
+   people boards. Main stays transparent so the Apply CTA's rounded corners
+   show the footer; the page wrapper brings the background. */
+.site-main:has(> .people-page) {
+  padding: 0;
+  background: transparent;
+}
+
+.people-page {
+  background: #f3f0eb;
+}
+
+.people {
+  --ink: #16181b;
+  --soft: rgb(22 24 27 / 0.58);
+  --line: rgb(22 24 27 / 0.1);
+  padding: 9rem 30px 6rem; /* same sides as Opportunities; top clears the floating header */
+  color: var(--ink);
+}
+
+/* Header ------------------------------------------------------------------ */
+.people__head {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 860px;
+  padding-bottom: 3rem;
+}
+
+.people__eyebrow {
+  margin: 0;
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.people__title {
+  margin: 0;
+  font-size: clamp(40px, 5.5vw, 76px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.people__intro {
+  max-width: 720px;
+  margin: 0;
+  color: var(--soft);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Dark people pages: the featured person's photo, blurred and darkened,
+   fills the background (people-page.js crossfades it), and the text turns
+   light. The frame is sticky so the backdrop stays in view while scrolling. */
+.people-page--dark {
+  position: relative;
+  isolation: isolate;
+  background: #0b0d10;
+}
+
+.people-page--dark .people {
+  /* At least a screen tall, plus the marquee bands that rise over the page's
+     bottom (see .apply-cta__thanks), so the Apply section starts below the
+     fold. */
+  min-height: calc(100svh + 6rem + 8vw);
+  --ink: #fff;
+  --soft: rgb(255 255 255 / 0.68);
+  --line: rgb(255 255 255 / 0.16);
+}
+
+.people-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.people-backdrop__frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.people-backdrop__layer {
+  position: absolute;
+  inset: -60px; /* the blur would otherwise fade at the edges */
+  filter: blur(36px) brightness(0.4) saturate(1.15);
+  transform: scale(1.05);
+}
+
+/* An extra shade so text over bright photos stays readable. */
+.people-backdrop__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.15) 40%, rgb(0 0 0 / 0.45));
+}
+
+.people-page--dark .board__chips li {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.people-page--dark .board__email {
+  color: #9cc2ff;
+}
+
+/* Roster pages (mentors, coordinators): a plain dark table, no photos. */
+.people-page--list {
+  background: #121212;
+}
+
+.people-page--list .people {
+  --ink: #fff;
+  --soft: rgb(255 255 255 / 0.6);
+  --line: rgb(255 255 255 / 0.85);
+  --hairline: rgb(255 255 255 / 0.22);
+  min-height: calc(100svh + 6rem + 8vw); /* the Apply section starts below the fold */
+}
+
+.roster + .roster {
+  margin-top: 6rem;
+}
+
+.roster__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  align-items: end;
+  gap: 0.75rem 3rem;
+  margin-bottom: 3.5rem;
+}
+
+.roster__title {
+  margin: 0;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.roster__tagline,
+.roster__note {
+  max-width: 560px;
+  margin: 0;
+  color: var(--soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.roster__note {
+  grid-column: 2;
+}
+
+/* One grid for the labels and every row: three columns, then the arrow. */
+.roster__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1.15fr) 72px;
+  align-items: center;
+  column-gap: 2rem;
+  padding: 0.85rem 0;
+}
+
+.roster__row--labels {
+  padding: 0 0 0.6rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--soft);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.roster__end {
+  justify-self: end;
+}
+
+.roster__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roster__item {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.roster__cell {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.roster__cell--0 {
+  font-weight: 500;
+}
+
+.roster__cell--1,
+.roster__cell--2 {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.roster__toggle {
+  display: grid;
+  place-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.roster__toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: rotate 0.35s ease;
+}
+
+.roster__toggle[aria-expanded='true'] svg {
+  rotate: 180deg;
+}
+
+.roster__toggle:focus-visible {
+  outline: 2px solid #9cc2ff;
+  outline-offset: 2px;
+}
+
+/* Details open downward from under the row. */
+.roster__detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+
+.roster__item[data-open] .roster__detail {
+  grid-template-rows: 1fr;
+}
+
+.roster__detail-inner {
+  overflow: hidden;
+}
+
+.roster__detail-body {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 760px;
+  margin-left: calc((100% - 72px - 6rem) / 3.5 + 2rem); /* starts under the 2nd column */
+  padding: 0.25rem 0 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.roster__item[data-open] .roster__detail-body {
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+.roster__detail-body p {
+  margin: 0;
+  color: var(--soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.roster__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.roster__chips li {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.roster__email {
+  width: fit-content;
+  color: #9cc2ff;
+  font-size: 16px;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roster__detail,
+  .roster__detail-body,
+  .roster__toggle svg {
+    transition: none;
+  }
+}
+
+/* Tablet: the third column goes; it's in the details instead. */
+@media (max-width: 900px) {
+  .roster__head {
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 2rem;
+  }
+
+  .roster__note {
+    grid-column: 1;
+  }
+
+  .roster__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) 48px;
+    column-gap: 1.25rem;
+  }
+
+  .roster__row > :nth-child(3) {
+    display: none;
+  }
+
+  .roster__cell {
+    font-size: 15px;
+  }
+
+  .roster__detail-body {
+    margin-left: 0;
+  }
+}
+
+/* Phone: name with the position under it, and the arrow. */
+@media (max-width: 600px) {
+  .roster + .roster {
+    margin-top: 4rem;
+  }
+
+  .roster__title {
+    font-size: 34px;
+  }
+
+  .roster__row {
+    grid-template-columns: minmax(0, 1fr) 40px;
+    row-gap: 0.15rem;
+  }
+
+  .roster__row--labels > :nth-child(2) {
+    display: none;
+  }
+
+  .roster__cell--1 {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 13px;
+    color: var(--soft);
+  }
+
+  .roster__row .roster__end {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .roster__detail-body p {
+    font-size: 15px;
+  }
+}
+
+/* Page title for screen readers only (people pages have no visible header). */
+.people__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Boards ----------------------------------------------------------------------
+   Desktop/tablet: a slider laid out by lib/board-slider.js, which places the
+   title, the details and every photo absolutely inside the stage (and sizes
+   the stage). Phones get the plain grid instead. */
+.board {
+  position: relative;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.board + .board {
+  margin-top: 5rem;
+}
+
+/* The first board opens the page: no rule above it. */
+.people__sr + .board {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.board__label {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* The title runs up the left edge; the tagline sits beside it, upright. */
+.board__title {
+  flex: none;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  writing-mode: vertical-rl;
+  rotate: 180deg; /* reads bottom to top */
+  text-align: end; /* end of the rotated line = top of the column */
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.board__tagline {
+  max-width: 280px;
+  margin: 0;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.board__note {
+  max-width: 720px;
+  margin: 0 0 2rem auto;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.board__stage {
+  position: relative;
+}
+
+/* Hidden until the first layout has placed everything. */
+.board__stage:not([data-ready]) {
+  visibility: hidden;
+}
+
+.board__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.board__slide[aria-current] {
+  cursor: default;
+}
+
+.board__slide .pic {
+  width: 100%;
+  height: 100%;
+}
+
+/* Initials scale with the photo as it grows or shrinks. */
+.board__slide {
+  container-type: size;
+}
+
+.board__slide .pic--initials {
+  font-size: 34cqw;
+}
+
+.board__slide:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.board__info {
+  position: absolute;
+  top: 0;
+}
+
+.board__panel {
+  position: absolute;
+  inset: 0 0 auto;
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+}
+
+.board__name {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.board__role {
+  margin: 0.25rem 0 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.board__meta,
+.board__bio {
+  margin: 0;
+  color: var(--soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.board__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0 0.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.board__chips li {
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: #fff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.board__email {
+  width: fit-content;
+  margin-top: 0.5rem;
+  color: var(--color-accent);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+  text-underline-offset: 3px;
+}
+
+/* Phone grid (hidden on larger screens). */
+.board__grid {
+  display: none;
+}
+
+/* Pictures: sharp-cornered photos, or initials on a brand colour. */
+.pic {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+  background: #e8e4dd;
+}
+
+.pic--initials {
+  display: grid;
+  place-content: center;
+  font-family: var(--font-display);
+  font-size: 96px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.pic--green { background: var(--color-primary); color: #fff; }
+.pic--blue { background: var(--color-accent); color: #fff; }
+.pic--mint { background: #b8efcf; color: var(--color-accent); }
+.pic--sky { background: #5b9bff; color: #fff; }
+
+/* Sections (FAQ) ------------------------------------------------------------ */
+.people__section {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+/* FAQ --------------------------------------------------------------------- */
+.faq {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 900px;
+}
+
+.faq__item {
+  border-radius: 20px;
+  background: #fff;
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.35rem 1.5rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Plus that turns into a minus when open. */
+.faq__item summary::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--soft);
+  font-size: 24px;
+  line-height: 1;
+  transition: rotate 0.3s ease;
+}
+
+.faq__item[open] summary::after {
+  rotate: 45deg;
+}
+
+.faq__num {
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.faq__q {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.faq__a {
+  margin: 0;
+  padding: 0 1.5rem 1.5rem calc(1.5rem + 1rem + 2ch);
+  color: var(--soft);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .people {
+    padding: 7.5rem 1rem 4rem;
+  }
+
+  .people__head {
+    padding-bottom: 2rem;
+  }
+
+  .people__intro {
+    font-size: 16px;
+  }
+
+  .board__title {
+    font-size: 36px;
+  }
+
+  .board__name {
+    font-size: 24px;
+  }
+
+  .board__role {
+    font-size: 15px;
+  }
+
+  .board__meta,
+  .board__bio {
+    font-size: 14px;
+  }
+
+  /* Too little room beside the big photo for a bio or chips on tablets. */
+  .board__bio,
+  .board__chips {
+    display: none;
+  }
+
+  .faq__item summary {
+    padding: 1.1rem 1.15rem;
+  }
+
+  .faq__q {
+    font-size: 18px;
+  }
+
+  .faq__a {
+    padding: 0 1.15rem 1.25rem;
+    font-size: 15px;
+  }
+}
+
+/* Phone: no slider, just a square grid of pictures with the names on them.
+   No cards, nothing to click. */
+@media (max-width: 600px) {
+  .board {
+    padding-top: 2rem;
+  }
+
+  .board + .board {
+    margin-top: 3rem;
+  }
+
+  .board__label {
+    position: static;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .board__title {
+    height: auto;
+    text-align: start;
+    writing-mode: horizontal-tb;
+    rotate: none;
+    font-size: 28px;
+  }
+
+  .board__tagline {
+    margin-top: 0.35rem;
+    font-size: 14px;
+  }
+
+  .board__note {
+    margin: 0 0 1rem;
+  }
+
+  .board__stage {
+    display: none;
+  }
+
+  .board__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .board__tile {
+    position: relative;
+  }
+
+  .board__tile .pic {
+    aspect-ratio: 1;
+  }
+
+  .board__tile .pic--initials {
+    padding-bottom: 2.5rem; /* keeps the initials clear of the name */
+    font-size: 40px;
+  }
+
+  .board__caption {
+    position: absolute;
+    inset: auto 0 0;
+    display: grid;
+    gap: 0.1rem;
+    padding: 2.5rem 0.65rem 0.6rem;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.75), transparent);
+    color: #fff;
+  }
+
+  .board__caption-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .board__caption-role {
+    font-size: 11px;
+    line-height: 1.3;
+    opacity: 0.85;
+  }
+}

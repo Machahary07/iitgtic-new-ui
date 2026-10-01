@@ -11,6 +11,13 @@
 // jobs show a `logo` instead: TIC jobs use /img/tic-logo.svg, startup jobs the
 // startup's logo (until one is added, /img/logos/startup-placeholder.svg, a
 // grey circle). `dummy: true` marks sample entries to replace with real ones.
+//
+// People pages (team, governingBody, committee, coordinators, mentors) and
+// faq: each is { title, intro, ... } with the page's list. People are
+// { name, role?, affiliation?, department?, email?, photo? } (photos live in
+// /img/people/); mentors carry { affiliation, expertise[], bio? }; the
+// coordinators page has `staff` plus `faculty` (with facultyTitle/Note); the
+// faq has `items` of { q, a }. Copied from the current site.
 const res = await fetch('/content.json');
 if (!res.ok) throw new Error(`content.json: ${res.status} ${res.statusText}`);
 

@@ -85,8 +85,8 @@ p {
   border-radius: 0 0 40px 40px;
   background: var(--cta-paper);
   color: var(--cta-ink);
-  /* Falling keyword shapes (.physics-pit) enter at the section's own top edge. */
-  overflow: clip;
+  /* Clip sideways only: the marquee bands rise over the section's top edge. */
+  overflow-x: clip;
 }
 
 /* Main must not paint behind the CTA's rounded corners; its sections bring
@@ -108,7 +108,9 @@ p {
   z-index: 1;
   align-self: stretch;
   height: var(--thanks-h);
-  margin: -6rem -30px 0;
+  /* Raised by half the tilt's rise so the bands' crossing covers the top
+     edge, with no white showing above them. */
+  margin: calc(-6rem - (var(--thanks-h) - var(--band-h)) / 2) -30px 0;
 }
 
 .apply-cta__band {
@@ -384,7 +386,7 @@ p {
   }
 
   .apply-cta__thanks {
-    margin: -4rem -1rem 0;
+    margin: calc(-4rem - (var(--thanks-h) - var(--band-h)) / 2) -1rem 0;
   }
 
   .apply-cta__thanks-group span {

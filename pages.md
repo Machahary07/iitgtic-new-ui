@@ -5,18 +5,14 @@ These 63 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 ```text
 /
 /about
-/about/committee-of-management
-/about/faq
-/about/governing-body
-/about/mentors
-/about/team
-/about/tic-coordinators
 /apply
 /auth/callback
 /auth/reset-password
+/committee-of-management
 /contact
 /cookies
 /events/[slug]
+/faq
 /founder
 /founder/activity
 /founder/applicants
@@ -27,12 +23,14 @@ These 63 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /founder/settings
 /founder/support
 /founder/users
+/governing-body
 /incubated-startups
 /incubated-startups/[slug]
 /incubated-startups/[slug]/[startupSlug]
 /incubation
 /incubation/[slug]
 /login
+/mentors
 /opportunities
 /opportunities/[id]
 /opportunities/events
@@ -44,6 +42,7 @@ These 63 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /schemes
 /schemes/funding
 /status
+/team
 /terms
 /tic-admin
 /tic-admin/activity
@@ -64,6 +63,7 @@ These 63 routes come from `src/routes/**/+page.svelte`. Bracketed segments are d
 /tic-admin/storage
 /tic-admin/support
 /tic-admin/users
+/tic-coordinators
 /unsubscribe
 /verify-email
 ```
@@ -76,6 +76,8 @@ These paths have a `+page.server.ts` redirect file but no matching `+page.svelte
 - `/tic-admin/home-page` → `/tic-admin/content/homeHero`
 
 `/partners` now redirects to `/about#partners`: partners are a section of the About page.
+
+The former About sub-pages are now top-level pages: `/about/team`, `/about/governing-body`, `/about/committee-of-management`, `/about/tic-coordinators`, `/about/mentors` and `/about/faq` redirect to `/team`, `/governing-body`, `/committee-of-management`, `/tic-coordinators`, `/mentors` and `/faq`.
 
 `/events` now also redirects to `/opportunities/events`: the events list is a filter of Opportunities, alongside `/opportunities/startup-jobs` and `/opportunities/tic-jobs`. Event detail pages stay at `/events/[slug]`.
 

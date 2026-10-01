@@ -9,13 +9,13 @@ const NAV = [
     label: 'About',
     links: [
       ['/about', 'About TIC'],
-      ['/about/team', 'Team'],
-      ['/about/governing-body', 'Governing body'],
-      ['/about/committee-of-management', 'Committee of management'],
-      ['/about/tic-coordinators', 'TIC coordinators'],
-      ['/about/mentors', 'Mentors'],
+      ['/team', 'Team'],
+      ['/governing-body', 'Governing body'],
+      ['/committee-of-management', 'Committee of management'],
+      ['/tic-coordinators', 'TIC coordinators'],
+      ['/mentors', 'Mentors'],
       ['/about#partners', 'Partners'],
-      ['/about/faq', 'FAQ'],
+      ['/faq', 'FAQ'],
     ],
   },
   {
@@ -55,7 +55,7 @@ const FOOTER_EXPLORE = [
 ];
 
 const FOOTER_LINKS = [
-  ['/about/faq', 'FAQ'],
+  ['/faq', 'FAQ'],
   ['/privacy', 'Privacy'],
   ['/terms', 'Terms'],
   ['/cookies', 'Cookies'],
@@ -121,9 +121,29 @@ window.addEventListener('resize', queueReveal);
 new MutationObserver(queueReveal).observe(document.body, { childList: true, subtree: true });
 
 // Light pages whose own background runs up behind a transparent header.
-const CLEAR_PAGES = ['/about', '/privacy', '/terms', '/cookies', '/refund'];
+const CLEAR_PAGES = [
+  '/about',
+  '/faq',
+  '/privacy',
+  '/terms',
+  '/cookies',
+  '/refund',
+];
 
-const DARK_PAGES = ['/', '/opportunities', '/opportunities/startup-jobs', '/opportunities/tic-jobs', '/opportunities/events'];
+const DARK_PAGES = [
+  '/',
+  '/opportunities',
+  '/opportunities/startup-jobs',
+  '/opportunities/tic-jobs',
+  '/opportunities/events',
+  // People pages: over a darkened photo backdrop.
+  '/team',
+  '/governing-body',
+  '/committee-of-management',
+  '/tic-coordinators',
+  '/mentors',
+  '/status',
+];
 
 const navMenu = ({ label, links, href }, path, i) => {
   if (href) {

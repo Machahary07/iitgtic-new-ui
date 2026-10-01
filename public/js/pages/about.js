@@ -15,14 +15,14 @@ const HAPPENS = [
     chip: 'Who we are',
     title: 'A space where ideas become ventures.',
     text: 'A platform where budding entrepreneurs can start a venture with minimum risk, backed by mentors with multidisciplinary expertise.',
-    cta: ['/about/team', 'Meet the TIC Team'],
+    cta: ['/team', 'Meet the TIC Team'],
     doodle: 'bulb',
   },
   {
     chip: 'Our mission',
     title: 'Encouraging entrepreneurship across the North-East.',
     text: 'For the IITG community and technical institutions of the North-East, with a focus on high-growth, knowledge-based businesses.',
-    cta: ['/about/mentors', 'Meet our Mentors'],
+    cta: ['/mentors', 'Meet our Mentors'],
     doodle: 'compass',
   },
   {
@@ -43,7 +43,7 @@ const HAPPENS = [
     chip: 'Governance',
     title: 'Directed by a Governing Body.',
     text: 'Chaired by the Director of IIT Guwahati, with the management team led by a Chief Executive Officer.',
-    cta: ['/about/governing-body', 'Meet the Governing Body'],
+    cta: ['/governing-body', 'Meet the Governing Body'],
     doodle: 'pillars',
   },
 ];
@@ -122,11 +122,11 @@ export default function page() {
           <p class="about__statement about__statement--on-rect" aria-hidden="true">${STATEMENT}</p>
         </div>
         <p class="about__governed">
-          Directed by the <a href="/about/governing-body">Governing Body</a> and the
-          <a href="/about/committee-of-management">Committee of Management</a> of IITG,<br />
-          run day to day by the <a href="/about/team">TIC Team</a> and
-          <a href="/about/tic-coordinators">TIC Coordinators</a>,<br />
-          with incubatees guided by our <a href="/about/mentors">Mentors</a>.
+          Directed by the <a href="/governing-body">Governing Body</a> and the
+          <a href="/committee-of-management">Committee of Management</a> of IITG,<br />
+          run day to day by the <a href="/team">TIC Team</a> and
+          <a href="/tic-coordinators">TIC Coordinators</a>,<br />
+          with incubatees guided by our <a href="/mentors">Mentors</a>.
         </p>
       </div>
     </section>

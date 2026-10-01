@@ -136,5 +136,665 @@
       "image": "/img/hero/opportunities-4.jpg",
       "href": "/events/maruti-suzuki-innovation-hackathon-2026"
     }
-  ]
+  ],
+  "team": {
+    "title": "The people behind the centre.",
+    "intro": "A small team that keeps incubation moving — programmes, partnerships, finance and the everyday work that turns the centre's intent into action.",
+    "people": [
+      {
+        "name": "Dr. Senthilmurugan Subbiah",
+        "role": "Prof-in-charge",
+        "email": "inchargetic@iitg.ac.in",
+        "photo": "/img/people/senthilmurugan-subbiah.jpg"
+      },
+      {
+        "name": "Urmi Buragohain",
+        "role": "Chief Executive Officer (CEO)",
+        "email": "ceo@iitgtic.com",
+        "photo": "/img/people/urmi-buragohain.jpg"
+      },
+      {
+        "name": "Mortuza Ahmed",
+        "role": "Accountant",
+        "email": "accountant@iitgtic.com",
+        "photo": "/img/people/mortuza-ahmed.jpg"
+      },
+      {
+        "name": "Sanket Umap",
+        "role": "Programme Outreach Officer",
+        "email": "poa@iitgtic.com",
+        "photo": "/img/people/sanket-umap.jpg"
+      },
+      {
+        "name": "Praneet Dutta",
+        "role": "Programme Coordinator",
+        "email": "coordinator@iitgtic.com"
+      },
+      {
+        "name": "Mriganka Patowary",
+        "role": "Technical Associate",
+        "email": "mriganka.patowary.ticiitg@gmail.com"
+      },
+      {
+        "name": "Roshan Sharma",
+        "role": "Administrative Assistant",
+        "email": "roshan.iitgtic@gmail.com"
+      }
+    ],
+    "tagline": "A dedicated team running the centre's programmes, partnerships, finance and operations, supporting every incubatee from first application through to graduation."
+  },
+  "governingBody": {
+    "title": "Directed by governing body.",
+    "intro": "Our governing body, chaired by the Director of IIT Guwahati, sets the direction of the centre and keeps its work aligned with the wider mission of fostering deep-tech entrepreneurship in the North-East.",
+    "people": [
+      {
+        "name": "Prof. Devendra Jalihal",
+        "role": "Chairman, IITG-TIC",
+        "affiliation": "Director, IIT Guwahati",
+        "photo": "/img/people/devendra-jalihal.jpg"
+      },
+      {
+        "name": "Prof. Rohit Sinha",
+        "role": "Vice Chairman, IITG-TIC",
+        "affiliation": "Dean, Research & Development (R&D), IIT Guwahati",
+        "photo": "/img/people/rohit-sinha.jpg"
+      },
+      {
+        "name": "Prof. Senthilmurugan Subbiah",
+        "role": "Member Secretary, IITG-TIC",
+        "affiliation": "Professor, Department of Chemical Engineering & Professor-in-Charge, IITG-TIC, IIT Guwahati",
+        "photo": "/img/people/senthilmurugan-subbiah.jpg"
+      },
+      {
+        "name": "Urmi Buragohain",
+        "role": "Special Invitee, IITG-TIC",
+        "affiliation": "CEO, IITG-TIC",
+        "photo": "/img/people/urmi-buragohain.jpg"
+      },
+      {
+        "name": "Dr. Amit Vyas",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Managing Director, Amul Dairy, Anand",
+        "photo": "/img/people/amit-vyas.jpg"
+      },
+      {
+        "name": "Mr. Bhaskar Phukan",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Managing Director, Numaligarh Refinery Limited (NRL)",
+        "photo": "/img/people/bhaskar-phukan.jpg"
+      },
+      {
+        "name": "Dr. Mahesh Gupta",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Founder & Chairman, KENT RO Systems",
+        "photo": "/img/people/mahesh-gupta.jpg"
+      },
+      {
+        "name": "Mr. Puneet Thalasara",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Founder & CMD, OnePWS (Pyrotech Workspace Solutions Pvt. Ltd.)",
+        "photo": "/img/people/puneet-thalasara.jpg"
+      },
+      {
+        "name": "Dr. Jeevan B. IAS",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Secretary to the Government of Assam, Department of Innovation, Incubation & Start-Ups (DIIS)",
+        "photo": "/img/people/jeevan-b-ias.jpg"
+      },
+      {
+        "name": "Prof. Ashok Jhunjhunwala",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Institute Professor, IIT Madras",
+        "photo": "/img/people/ashok-jhunjhunwala.jpg"
+      },
+      {
+        "name": "Pankaj Kumar",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Founder, Quant Solar",
+        "photo": "/img/people/pankaj-kumar.jpg"
+      }
+    ],
+    "tagline": "Chaired by the Director of IIT Guwahati, the Governing Body sets the strategic direction of the centre and keeps its work focused on advancing deep technology entrepreneurship across the North East."
+  },
+  "committee": {
+    "title": "Run by its Committee of Management.",
+    "intro": "The Committee of Management oversees the day-to-day running of the centre, carrying out the direction set by the governing body.",
+    "people": [
+      {
+        "name": "Prof. Rohit Sinha",
+        "role": "Chairman, IITG-TIC",
+        "affiliation": "Dean, Research & Development (R&D), IIT Guwahati",
+        "photo": "/img/people/rohit-sinha.jpg"
+      },
+      {
+        "name": "Prof. Senthilmurugan Subbiah",
+        "role": "Member Secretary, IITG-TIC",
+        "affiliation": "Professor, Department of Chemical Engineering & Professor-in-Charge, IITG-TIC, IIT Guwahati",
+        "photo": "/img/people/senthilmurugan-subbiah.jpg"
+      },
+      {
+        "name": "Dr. Ajeet Kumar",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Faculty, Department of Design, IIT Guwahati",
+        "photo": "/img/people/ajeet-kumar.jpg"
+      },
+      {
+        "name": "Dr. Rinku Kumar Mittal",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Faculty, Department of Mechanical Engineering, IIT Guwahati",
+        "photo": "/img/people/rinku-kumar-mittal.jpg"
+      },
+      {
+        "name": "Dr. Amit Chintamani Awekar",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Faculty, Department of Computer Science & Engineering, IIT Guwahati",
+        "photo": "/img/people/amit-chintamani-awekar.jpg"
+      },
+      {
+        "name": "Urmi Buragohain",
+        "role": "Member, IITG-TIC",
+        "affiliation": "Chief Executive Officer (CEO), IITG-TIC",
+        "photo": "/img/people/urmi-buragohain.jpg"
+      }
+    ],
+    "tagline": "The Committee of Management oversees the running of the centre, turning the direction set by the Governing Body into programmes, decisions and measurable results."
+  },
+  "coordinators": {
+    "title": "The people who keep the centre connected.",
+    "intro": "Coordinators are the first point of contact between the centre and the departments, programmes and founders it works with — the ones to write to when you are not sure where a question belongs.",
+    "staff": [
+      {
+        "name": "Praneet Dutta",
+        "role": "Programme Coordinator",
+        "email": "coordinator@iitgtic.com"
+      }
+    ],
+    "facultyTitle": "TIC Coordinators",
+    "facultyNote": "Appointed for one year with immediate effect. Coordinators support IITG TIC in startup evaluation, mentoring, and related activities.",
+    "faculty": [
+      {
+        "name": "Prof. Nageswara Rao Peela",
+        "role": "TIC Coordinator",
+        "department": "Department of Chemical Engineering"
+      },
+      {
+        "name": "Dr. Sajan Kapil",
+        "role": "TIC Coordinator",
+        "department": "Department of Mechanical Engineering"
+      },
+      {
+        "name": "Prof. Sachin Kumar",
+        "role": "TIC Coordinator",
+        "department": "Department of Biosciences and Bioengineering"
+      },
+      {
+        "name": "Dr. Sharmila R. B.",
+        "role": "TIC Coordinator",
+        "department": "Department of Civil Engineering"
+      },
+      {
+        "name": "Dr. Ajeet Kumar",
+        "role": "TIC Coordinator",
+        "department": "Department of Design"
+      },
+      {
+        "name": "Dr. Neeraj Kumar Sharma",
+        "role": "TIC Coordinator",
+        "department": "Mehta Family School of Data Science and Artificial Intelligence"
+      },
+      {
+        "name": "Dr. Ravindra Kumar Jha",
+        "role": "TIC Coordinator",
+        "department": "Department of Electronics and Electrical Engineering"
+      }
+    ],
+    "staffTagline": "The first point of contact for founders, partners and departments, guiding every enquiry to the right people within the centre.",
+    "facultyTagline": "Faculty members from across IIT Guwahati who support the centre in startup evaluation, mentoring and technical guidance."
+  },
+  "mentors": {
+    "title": "The people who walk alongside our founders.",
+    "intro": "Our mentors aren't here to lecture — they're here to think with you: senior academics and practitioners who have done the work themselves and make time for our founders.",
+    "people": [
+      {
+        "name": "Dr. Pankaj Kalita",
+        "affiliation": "Associate Professor, School of Energy Science & Engineering, IIT Guwahati",
+        "expertise": [
+          "Clean Energy Technology",
+          "Gasification",
+          "Energy Storage",
+          "Solar Energy",
+          "Energy Management"
+        ],
+        "bio": "Experienced researcher in renewable energy, solar technologies, energy storage, biomass gasification, anaerobic digestion, biochar and sustainable energy systems."
+      },
+      {
+        "name": "Prof. Santosh Kr. Dwivedy",
+        "affiliation": "Professor, Department of Mechanical Engineering, IIT Guwahati",
+        "expertise": [
+          "Design & Robotics",
+          "Non-linear Dynamics",
+          "Vibration"
+        ],
+        "bio": "Expert in vibration and dynamics of mechanical systems, flexible robotic manipulators, vibration control, FEM, computational mechanics and biomechanics."
+      },
+      {
+        "name": "Ms. Charu Monga",
+        "affiliation": "Assistant Professor, Department of Design, IIT Guwahati",
+        "expertise": [
+          "Visual Communication",
+          "Filmmaking",
+          "Animation",
+          "Digital Media",
+          "Game Design",
+          "Design Research"
+        ],
+        "bio": "Works across visual communication, design research, filmmaking, animation, illustration, game design and emerging media, with emphasis on culture and communities."
+      },
+      {
+        "name": "Prof. Prabirkumar Saha",
+        "affiliation": "Professor, Department of Chemical Engineering, IIT Guwahati",
+        "expertise": [
+          "Process Modelling",
+          "Optimization & Control",
+          "Membrane Separation"
+        ],
+        "bio": "Specialist in process modelling, advanced control systems and membrane-based separation, with research applications in CO₂ absorption, bioactive compound recovery and water treatment."
+      },
+      {
+        "name": "Prof. Mihir Kumar Purkait",
+        "affiliation": "Professor (HAG), Department of Chemical Engineering, IIT Guwahati",
+        "expertise": [
+          "Membrane Technology",
+          "Waste Management",
+          "Catalysis",
+          "Nanotechnology",
+          "Biofuels"
+        ],
+        "bio": "Experienced researcher in membrane technology, water and wastewater treatment, nanomaterials, catalysis, bio-products and CO₂ conversion, with strong focus on technology development and commercialisation."
+      },
+      {
+        "name": "Dr. Partha Sarathi Mandal",
+        "affiliation": "Professor, Department of Mathematics, IIT Guwahati",
+        "expertise": [
+          "Swarm Robotics",
+          "Wireless Sensor Networks",
+          "Distributed Algorithms"
+        ],
+        "bio": "Specialises in distributed computing and autonomous systems, including swarm robotics, fault-tolerant systems, wireless sensor networks and distributed decision-making."
+      },
+      {
+        "name": "Prof. K. Pakshirajan",
+        "affiliation": "Professor, Department of Biosciences & Bioengineering, IIT Guwahati",
+        "expertise": [
+          "Environmental Technology"
+        ],
+        "bio": "Expert in environmental biotechnology, biofuels, biochemicals, biorefineries and bioprocess technology, with significant work in treatment of contaminated air, soil and water."
+      },
+      {
+        "name": "Prof. Uday S. Dixit",
+        "affiliation": "Professor, Department of Mechanical Engineering, IIT Guwahati",
+        "expertise": [
+          "Design & Manufacturing",
+          "FEM",
+          "Mechatronics",
+          "Neural Networks"
+        ],
+        "bio": "Works in advanced design and manufacturing, finite element methods, mechatronics, neural networks and intelligent engineering systems."
+      },
+      {
+        "name": "Dr. Supradip Das",
+        "affiliation": "Assistant Professor, Department of Design, IIT Guwahati",
+        "expertise": [
+          "Product Development",
+          "Origami Design",
+          "Packaging",
+          "Furniture Design"
+        ],
+        "bio": "Specialises in origami-inspired product development, structural packaging, transformable furniture, paper craft and sustainable product design."
+      },
+      {
+        "name": "Prof. Vibin Ramakrishnan",
+        "affiliation": "Professor, Department of Biosciences & Bioengineering, IIT Guwahati",
+        "expertise": [
+          "Computational Biology",
+          "Bioinformatics",
+          "Biophysics",
+          "Bionanotechnology"
+        ],
+        "bio": "Research expertise in computational biophysics, biotechnology and interdisciplinary bioscience, with extensive publications, patents and industry advisory experience."
+      },
+      {
+        "name": "Prof. V. V. Goud",
+        "affiliation": "Professor, Department of Chemical Engineering, IIT Guwahati",
+        "expertise": [
+          "Biofuels",
+          "Bio-lubricants"
+        ],
+        "bio": "Expert in bio-energy, green engineering, lignocellulosic biomass utilisation, biolubricants and sustainable technologies for biofuels and green chemicals."
+      },
+      {
+        "name": "Prof. Pranab Goswami",
+        "affiliation": "Professor, Department of Biosciences & Bioengineering, IIT Guwahati",
+        "expertise": [
+          "Hydrogen Fuel Cell Systems"
+        ],
+        "bio": "Works on biosensors, biofuel cells and bioelectrochemical systems with applications in healthcare, environmental monitoring and sustainable energy."
+      },
+      {
+        "name": "Prof. Manoj Majhi",
+        "affiliation": "Associate Professor, Department of Design, IIT Guwahati",
+        "expertise": [
+          "Animation",
+          "Special Effects",
+          "Cartooning"
+        ],
+        "bio": "Specialises in animation, traditional animation, special effects, cartooning and visual storytelling, with expertise spanning creative and technical aspects of animation cinema."
+      },
+      {
+        "name": "Prof. Pradeep G. Yammiyavar",
+        "affiliation": "Senior Professor of Design, IIT Guwahati",
+        "expertise": [
+          "HCI",
+          "AR/VR",
+          "UX",
+          "Product Design",
+          "Branding",
+          "Innovation",
+          "Smart Cities"
+        ],
+        "bio": "Has 30+ years of academic experience in innovation, design research, product development, HCI, UX and strategic design management, with extensive experience mentoring design entrepreneurs."
+      },
+      {
+        "name": "Dr. Pankaj Biswas",
+        "affiliation": "Professor, Department of Mechanical Engineering, IIT Guwahati",
+        "expertise": [
+          "FEM",
+          "Welding",
+          "Manufacturing",
+          "Design"
+        ],
+        "bio": "Specialist in computational weld mechanics, advanced welding, manufacturing, FEM and intelligent approaches to process optimisation and structural fabrication."
+      },
+      {
+        "name": "Prof. S. R. Mahadeva Prasanna",
+        "affiliation": "Professor, Department of Electronics & Electrical Engineering, IIT Guwahati",
+        "expertise": [
+          "Speech & Signal Processing"
+        ],
+        "bio": "Accomplished researcher in speech, audio, image and biomedical signal processing and AI, with significant academic, research and institutional leadership experience."
+      },
+      {
+        "name": "Dr. Priyankoo Sarmah",
+        "affiliation": "Professor, Department of Humanities & Social Sciences, IIT Guwahati",
+        "expertise": [
+          "Language Technology",
+          "Speech Recognition",
+          "Phonetics"
+        ],
+        "bio": "Specialises in phonetics, phonology, speech recognition and language technologies, particularly for low-resource and Indian languages and Northeast Indian languages."
+      },
+      {
+        "name": "Prof. S. R. Joshi",
+        "affiliation": "Professor, Department of Biotechnology & Bioinformatics, NEHU, Shillong",
+        "expertise": [
+          "Biotechnology",
+          "Applied Microbiology"
+        ],
+        "bio": "Experienced academic and researcher in microbiology, biotechnology and bioinformatics, contributing to life-sciences research and academic development in Northeast India."
+      },
+      {
+        "name": "Dr. T. Venkatesh",
+        "affiliation": "Professor, Department of Computer Science & Engineering, IIT Guwahati",
+        "expertise": [
+          "Network Protocols",
+          "Cloud Computing",
+          "Multimedia Streaming"
+        ],
+        "bio": "Researcher in computer networks, cloud computing, wireless networks, network security, data-centre networking, multimedia streaming and content delivery networks."
+      },
+      {
+        "name": "Prof. Shaik Rafi Ahmed",
+        "affiliation": "Professor, Department of Electronics & Electrical Engineering, IIT Guwahati",
+        "expertise": [
+          "VLSI",
+          "Machine Learning",
+          "Digital IC Design",
+          "Biomedical Signal Processing"
+        ],
+        "bio": "Works on VLSI architectures, digital IC design, machine-learning algorithms, adaptive signal processing, communication systems and biomedical signal processing."
+      },
+      {
+        "name": "Punit Gupta",
+        "affiliation": "Entrepreneur / Strategy & GTM Professional",
+        "expertise": [
+          "GTM",
+          "Strategy"
+        ],
+        "bio": "Experienced in fintech, MSME lending, sales operations and startup growth, with expertise in GTM planning, pitch development, sales strategy and business growth."
+      },
+      {
+        "name": "Abhishek Pradhan",
+        "affiliation": "IIT Guwahati Alumnus; Director, Deloitte Consulting",
+        "expertise": [
+          "Strategy",
+          "Business"
+        ],
+        "bio": "Has 20+ years of experience in business strategy, technology consulting and enterprise transformation, including technology strategy, product development and business transformation."
+      },
+      {
+        "name": "Tahsin Ali",
+        "affiliation": "IIT Guwahati Alumnus; Principal Product Manager, Amazon",
+        "expertise": [
+          "Product Development"
+        ]
+      },
+      {
+        "name": "Gaurav Kumar",
+        "affiliation": "IIT Guwahati Alumnus; Principal Product Manager",
+        "expertise": [
+          "Strategy"
+        ],
+        "bio": "Technology leader and entrepreneur with 20+ years of experience in mobile technologies, AI and product development, including experience with Samsung, Intel, Texas Instruments and Qualcomm."
+      },
+      {
+        "name": "Prawin Janardhan Bhagat",
+        "affiliation": "IIT Guwahati Alumnus; Game Developer, Datalogy Software Pvt. Ltd.",
+        "expertise": [
+          "Product Development"
+        ],
+        "bio": "Senior Unity Game Developer with 6+ years of experience in game engineering and technical product development, specialising in multiplayer mobile games and Unity-based development."
+      }
+    ],
+    "tagline": "Senior academics and industry practitioners who share their expertise and experience, working closely with founders to shape strong ideas into viable ventures."
+  },
+  "faq": {
+    "title": "Quick answers, honestly given.",
+    "intro": "The questions we hear most often from founders, applicants and partners — and the straightest answers we can offer to each.",
+    "items": [
+      {
+        "q": "Who can apply to IITG-TIC?",
+        "a": "Anyone with a working idea and an inherent zeal to build a venture — students, faculty, alumni and outside founders are all welcome. We particularly encourage applicants from the North-East."
+      },
+      {
+        "q": "What kind of ideas does the centre support?",
+        "a": "Technology-led ideas — deep tech, hardware, software platforms, embedded systems, knowledge-based products. The idea should have a credible path to becoming a commercially viable venture."
+      },
+      {
+        "q": "What support does the centre provide?",
+        "a": "Workspace inside the Technology Complex, technical assistance, business mentoring, network access, and — subject to availability — a soft-loan facility."
+      },
+      {
+        "q": "Is funding available?",
+        "a": "Yes. Soft-loan support is available for qualifying incubatees, and we work with funding partners including the Technology Development Board and Startup India for further capital."
+      },
+      {
+        "q": "Do I need to be affiliated with IIT Guwahati?",
+        "a": "No. While we have a strong link with the IITG community, we welcome founders from anywhere — particularly from across the North-East ecosystem."
+      },
+      {
+        "q": "How long is the incubation programme?",
+        "a": "Programme length varies with the venture. Some incubatees graduate inside a year; others stay through multi-year R&D arcs. The arrangement is shaped to fit the work."
+      },
+      {
+        "q": "How do I apply?",
+        "a": "Head to the Apply page and submit your idea. Our team will review it and reach out for a conversation if it looks like a fit."
+      }
+    ]
+  },
+  "status": {
+    "title": "Building the new website.",
+    "intro": "Where the new IITG-TIC website stands, from the pages you see to the systems behind them.",
+    "stages": [
+      {
+        "name": "Frontend",
+        "icon": "monitor",
+        "items": [
+          {
+            "name": "Design system",
+            "icon": "palette",
+            "state": "done"
+          },
+          {
+            "name": "Home",
+            "icon": "home",
+            "state": "done",
+            "pages": 1
+          },
+          {
+            "name": "About, people and FAQ",
+            "icon": "users",
+            "state": "done",
+            "pages": 7
+          },
+          {
+            "name": "Opportunities",
+            "icon": "briefcase",
+            "state": "done",
+            "pages": 4
+          },
+          {
+            "name": "Legal pages",
+            "icon": "file",
+            "state": "done",
+            "pages": 4
+          },
+          {
+            "name": "Status",
+            "icon": "gauge",
+            "state": "done",
+            "pages": 1
+          },
+          {
+            "name": "Opportunity and event details",
+            "icon": "calendar",
+            "state": "todo",
+            "pages": 2
+          },
+          {
+            "name": "Incubation, programs and schemes",
+            "icon": "rocket",
+            "state": "todo",
+            "pages": 5
+          },
+          {
+            "name": "Incubated startups",
+            "icon": "sprout",
+            "state": "todo",
+            "pages": 3
+          },
+          {
+            "name": "Contact and apply",
+            "icon": "mail",
+            "state": "todo",
+            "pages": 2
+          },
+          {
+            "name": "Sign in and accounts",
+            "icon": "key",
+            "state": "todo",
+            "pages": 5
+          },
+          {
+            "name": "Founder console",
+            "icon": "layout",
+            "state": "todo",
+            "pages": 10
+          },
+          {
+            "name": "TIC admin console",
+            "icon": "shield",
+            "state": "todo",
+            "pages": 19
+          }
+        ]
+      },
+      {
+        "name": "Backend",
+        "icon": "server",
+        "items": [
+          {
+            "name": "Web server and routing",
+            "icon": "route",
+            "state": "done"
+          },
+          {
+            "name": "Content file",
+            "icon": "database",
+            "state": "done"
+          },
+          {
+            "name": "API and database",
+            "icon": "plug",
+            "state": "todo"
+          },
+          {
+            "name": "Sign in",
+            "icon": "key",
+            "state": "todo"
+          },
+          {
+            "name": "Forms and email",
+            "icon": "mail",
+            "state": "todo"
+          },
+          {
+            "name": "VPS hosting",
+            "icon": "cloud",
+            "state": "todo"
+          }
+        ]
+      },
+      {
+        "name": "SEO",
+        "icon": "search",
+        "items": [
+          {
+            "name": "Page titles",
+            "icon": "type",
+            "state": "done"
+          },
+          {
+            "name": "Descriptions and social cards",
+            "icon": "share",
+            "state": "todo"
+          },
+          {
+            "name": "Sitemap",
+            "icon": "map",
+            "state": "todo"
+          },
+          {
+            "name": "Performance",
+            "icon": "gauge",
+            "state": "todo"
+          },
+          {
+            "name": "Domain connection",
+            "icon": "globe",
+            "state": "todo"
+          }
+        ]
+      }
+    ]
+  }
 }

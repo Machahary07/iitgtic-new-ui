@@ -8,7 +8,7 @@
 import { loadScrollTrigger } from './gsap.js';
 
 const LOOP_S = 30; // seconds per loop, same as the CSS fallback
-const MAX_BOOST = 8; // fastest scroll-driven speed, as a multiple of normal
+const MAX_BOOST = 2; // fastest scroll-driven speed, as a multiple of normal
 const SETTLE_S = 0.15; // quiet time after the last scroll before slowing down
 const still = window.matchMedia('(prefers-reduced-motion: reduce)');
 

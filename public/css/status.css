@@ -1,0 +1,436 @@
+/* Website status (pages/status.js): a white card with a dark pill track of
+   stage circles (big) and task circles (small), the lit bar showing how far
+   along the build is, then a breakdown per stage. Warm off-white page. */
+.site-main:has(> .status) {
+  padding: 0;
+  background: #121212;
+}
+
+.status {
+  --ink: #16181b;
+  --soft: rgb(22 24 27 / 0.6);
+  --page-ink: #fff;
+  --page-soft: rgb(255 255 255 / 0.65);
+  --lit: var(--color-primary); /* done: brand green */
+  --busy: #5b9bff; /* underway: the site's sky blue */
+  --dim: #4a4d52; /* not started, on the dark pill */
+  --pill: #16181b;
+  /* Circle sizes scale with the screen so every task fits in one row. */
+  --small: clamp(24px, 2.4vw, 36px);
+  --big: clamp(44px, 4.4vw, 64px);
+  --bar: calc(var(--small) * 0.85);
+  padding: 9rem 30px 7rem; /* same sides as Opportunities; top clears the header */
+  color: var(--ink);
+}
+
+.status__head {
+  display: grid;
+  gap: 1rem;
+  max-width: 860px;
+  margin-bottom: 3rem;
+}
+
+.status__eyebrow {
+  margin: 0;
+  color: var(--page-soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.status__title {
+  margin: 0;
+  color: var(--page-ink);
+  font-size: clamp(40px, 5.5vw, 76px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.status__intro {
+  max-width: 640px;
+  margin: 0;
+  color: var(--page-soft);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Card ---------------------------------------------------------------------- */
+.status__card {
+  display: grid;
+  gap: 2.5rem;
+  padding: 3rem;
+  border-radius: 40px;
+  background: #fff;
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.35);
+}
+
+.status__card-head h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.status__card-head p {
+  margin: 0;
+  color: var(--soft);
+  font-size: 20px;
+}
+
+/* Track: the pill, the lit bar behind the circles, the circles in a row. */
+.status__track {
+  --vertical: 0;
+  position: relative;
+  margin-bottom: 4.5rem; /* the stage labels hang below the pill */
+  padding: 18px 22px;
+  border-radius: 999px;
+  background: var(--pill);
+}
+
+.status__fill {
+  position: absolute;
+  top: calc(18px + (var(--big) - var(--bar)) / 2); /* centred on the circles' row */
+  left: var(--fill-start, 22px);
+  width: var(--fill-size, 0);
+  height: var(--bar);
+  border-radius: 999px;
+  background: var(--lit);
+  transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.status__track:not([data-ready]) .status__fill {
+  width: 0;
+}
+
+.status__nodes {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status__node {
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+.status__dot {
+  display: grid;
+  place-content: center;
+  width: var(--small);
+  height: var(--small);
+  border-radius: 50%;
+  background: var(--dim);
+  color: rgb(255 255 255 / 0.55);
+}
+
+.status__dot .icon {
+  width: calc(var(--small) * 0.5);
+  height: calc(var(--small) * 0.5);
+}
+
+.status__node--big .status__dot {
+  width: var(--big);
+  height: var(--big);
+}
+
+.status__node--big .status__dot .icon {
+  width: calc(var(--big) * 0.44);
+  height: calc(var(--big) * 0.44);
+}
+
+.status__node--done .status__dot,
+.status__dot--done {
+  background: var(--lit);
+  color: #fff;
+}
+
+/* Stages: green once finished, blue while underway. */
+.status__node--progress.status__node--big .status__dot,
+.status__stage-head .status__dot--progress {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* A task underway: a sky-blue ring around a dark centre. */
+.status__node--progress:not(.status__node--big) .status__dot {
+  box-shadow: inset 0 0 0 3px var(--busy);
+  background: var(--pill);
+  color: var(--busy);
+}
+
+/* Stage names sit outside the pill, under their circles. */
+.status__label {
+  position: absolute;
+  top: calc(100% + 18px + 14px);
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  white-space: nowrap;
+}
+
+.status__label-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.status__label-percent {
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.status__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Summary: label and a big mono number. */
+.status__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.25rem 2rem;
+}
+
+.status__summary p {
+  margin: 0;
+  color: var(--soft);
+  font-size: 20px;
+}
+
+.status__percent {
+  grid-row: 2;
+  font-family: var(--font-mono);
+  font-size: clamp(56px, 7vw, 96px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.status__percent span {
+  font-size: 0.5em;
+}
+
+.status__summary .status__server {
+  grid-row: 2;
+  grid-column: 2;
+  font-size: 15px;
+}
+
+.status__badge {
+  margin-left: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: #ece9e3;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.status__badge--good {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.status__badge--bad {
+  background: #ffd5cc;
+}
+
+/* Breakdown ----------------------------------------------------------------- */
+.status__stages {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.status__stage {
+  padding: 2rem;
+  border-radius: 32px;
+  background: #fff;
+}
+
+.status__stage-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.status__stage-head .status__dot {
+  width: 52px;
+  height: 52px;
+}
+
+.status__stage-head .status__dot .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.status__stage-head h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.status__stage-percent {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 22px;
+}
+
+.status__tasks {
+  display: grid;
+  gap: 0.675rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status__task {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.status__dot--small {
+  width: 29px;
+  height: 29px;
+}
+
+.status__dot--small .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.status__dot--progress.status__dot--small {
+  box-shadow: inset 0 0 0 3px var(--busy);
+  background: #fff;
+  color: var(--color-accent);
+}
+
+.status__stage-head .status__dot--done {
+  color: #fff;
+}
+
+.status__dot--todo {
+  background: #ece9e3;
+  color: rgb(22 24 27 / 0.45);
+}
+
+.status__task-name {
+  font-size: 14.4px;
+}
+
+.status__task-pages {
+  margin-left: 0.35rem;
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.status__task--todo .status__task-name {
+  color: var(--soft);
+}
+
+.status__task-state {
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status__fill {
+    transition: none;
+  }
+}
+
+/* Tablet and phone: too many circles for one row, so the track stands
+   upright with the stage names beside their circles; breakdown in one column. */
+@media (max-width: 1000px) {
+  .status {
+    --small: 28px;
+    --big: 52px;
+  }
+
+  .status__track {
+    --vertical: 1;
+    width: fit-content;
+    margin: 0;
+    padding: 18px 14px;
+  }
+
+  .status__fill {
+    top: var(--fill-start, 18px);
+    left: calc(14px + (var(--big) - var(--bar)) / 2);
+    width: var(--bar);
+    height: var(--fill-size, 0);
+    transition-property: height;
+  }
+
+  .status__track:not([data-ready]) .status__fill {
+    height: 0;
+  }
+
+  .status__nodes {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .status__label {
+    top: 50%;
+    left: calc(100% + 14px + 18px);
+    justify-items: start;
+    translate: 0 -50%;
+  }
+
+  .status__stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .status {
+    padding: 7.5rem 1rem 4rem;
+  }
+
+  .status__intro,
+  .status__card-head p,
+  .status__summary p {
+    font-size: 16px;
+  }
+
+  .status__card {
+    padding: 1.5rem;
+    border-radius: 28px;
+  }
+
+  .status__summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .status__summary .status__server {
+    grid-row: auto;
+    grid-column: 1;
+  }
+
+  .status__stage {
+    padding: 1.5rem;
+    border-radius: 24px;
+  }
+}
