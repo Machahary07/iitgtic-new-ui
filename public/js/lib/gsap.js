@@ -26,3 +26,19 @@ export function loadGsap() {
     });
   return loading;
 }
+
+// ScrollTrigger on top of GSAP, loaded only by the pages that need it.
+let scrolling;
+export function loadScrollTrigger() {
+  scrolling ??= loadGsap()
+    .then(({ gsap }) => script(`${CDN}ScrollTrigger.min.js`).then(() => gsap))
+    .then((gsap) => {
+      gsap.registerPlugin(window.ScrollTrigger);
+      return { gsap, ScrollTrigger: window.ScrollTrigger };
+    })
+    .catch((err) => {
+      scrolling = undefined;
+      throw err;
+    });
+  return scrolling;
+}

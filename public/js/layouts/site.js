@@ -121,7 +121,7 @@ window.addEventListener('resize', queueReveal);
 new MutationObserver(queueReveal).observe(document.body, { childList: true, subtree: true });
 
 // Light pages whose own background runs up behind a transparent header.
-const CLEAR_PAGES = ['/about'];
+const CLEAR_PAGES = ['/about', '/privacy', '/terms', '/cookies', '/refund'];
 
 const DARK_PAGES = ['/', '/opportunities', '/opportunities/startup-jobs', '/opportunities/tic-jobs', '/opportunities/events'];
 
@@ -192,7 +192,7 @@ export default function siteLayout(content, { path }) {
           <nav class="site-footer__legal" aria-label="Legal">
             ${FOOTER_LINKS.map(([href, label]) => html`<a href="${href}">${label}</a>`)}
           </nav>
-          <p class="site-footer__copy">© ${new Date().getFullYear()}</p>
+          <p class="site-footer__copy">© ${new Date().getFullYear()} IITG-TIC</p>
         </div>
       </div>
     </footer>`;

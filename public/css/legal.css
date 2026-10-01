@@ -1,0 +1,264 @@
+/* Legal pages (components/legal-page.js): compact, document-like reading on
+   warm off-white. A pill switcher and title on top, then the topics beside
+   a sticky topic navigator (desktop only) that marks the current topic. */
+/* Main stays transparent so the Apply CTA's rounded corners show the footer;
+   the page wrapper brings the background. */
+.site-main:has(> .legal-page) {
+  padding: 0;
+  background: transparent;
+}
+
+.legal-page {
+  background: #f3f0eb;
+}
+
+.legal {
+  --ink: #16181b;
+  --soft: rgb(22 24 27 / 0.55);
+  --line: rgb(22 24 27 / 0.1);
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: 8.5rem 1.5rem 6rem; /* top clears the floating header */
+  color: var(--ink);
+}
+
+/* Header ------------------------------------------------------------------ */
+.legal__head {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  max-width: 720px;
+  margin-left: calc(220px + 4rem); /* lines up with the topics column */
+  padding-bottom: 2.5rem;
+}
+
+.legal__switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgb(22 24 27 / 0.06);
+}
+
+.legal__switch a {
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  color: var(--soft);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.legal__switch a:hover {
+  color: var(--ink);
+}
+
+.legal__switch a[aria-current='page'] {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.legal__title {
+  margin: 0;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.legal__intro {
+  margin: 0;
+  color: var(--soft);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Body: navigator + topics ------------------------------------------------- */
+.legal__body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 720px);
+  gap: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.legal__nav {
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+  padding-top: 2.5rem;
+}
+
+.legal__nav-title {
+  margin: 0 0 0.85rem;
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.legal__nav ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line);
+}
+
+.legal__nav a {
+  position: relative;
+  display: block;
+  margin-left: -1px;
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 2px solid transparent;
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1.35;
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.legal__nav a:hover {
+  color: var(--ink);
+}
+
+.legal__nav a[data-current] {
+  border-left-color: var(--color-primary);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.legal__section {
+  padding: 2.5rem 0 0.5rem;
+  scroll-margin-top: 4rem; /* lands the title inside the navigator's "current" line */
+}
+
+.legal__section + .legal__section {
+  border-top: 1px solid var(--line);
+}
+
+.legal__section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.legal__num {
+  color: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.legal__section p,
+.legal__section li {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.legal__section p {
+  margin: 0 0 0.9rem;
+}
+
+.legal__section ul {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.legal__section li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.legal__section li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.legal__card {
+  display: grid;
+  gap: 0.2rem;
+  max-width: 420px;
+  margin: 1.25rem 0 0;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 15px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.legal__card strong {
+  font-weight: 600;
+}
+
+.legal__card a {
+  width: fit-content;
+  color: var(--color-accent);
+  font-size: 15px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.legal__card a:first-of-type {
+  margin-top: 0.6rem;
+}
+
+/* Tablet and phone: no navigator, one column. */
+@media (max-width: 900px) {
+  .legal {
+    padding: 7rem 1rem 4rem;
+  }
+
+  .legal__head {
+    margin-left: 0;
+    padding-bottom: 2rem;
+  }
+
+  .legal__switch {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .legal__switch a {
+    flex: none;
+    padding: 0.35rem 0.7rem;
+    font-size: 13px;
+  }
+
+  .legal__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .legal__nav {
+    display: none;
+  }
+
+  .legal__section {
+    padding-top: 2rem;
+  }
+}

@@ -1,11 +1,7 @@
-import { html } from '../lib/html.js';
+import { legalPage, mountLegal } from '../components/legal-page.js';
 
-export const title = 'Terms of Service';
+export const title = 'Terms of Use';
 
-// Route: /terms
-export default function page() {
-  return html`
-    <section class="page">
-      <h1>Terms of Service</h1>
-    </section>`;
-}
+// Route: /terms (copy in data/legal.js)
+export default ({ path }) => legalPage('terms', path);
+export const mount = mountLegal;

@@ -60,7 +60,7 @@ const SLIDES = [
   },
 ];
 
-const SLIDE_MS = 4500;
+const SLIDE_MS = 6500;
 
 const ASSOCIATES = CONTENT.partners; // shared with the About page's partner cards
 

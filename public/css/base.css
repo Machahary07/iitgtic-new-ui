@@ -77,10 +77,16 @@ p {
   gap: 2rem;
   text-align: center;
   padding: 6rem 30px;
-  border-top: 1px solid rgb(0 0 0 / 0.12);
+  /* Marquee bands: height, tilt, and the box tall enough for their tilted
+     ends (~8vw of rise across the width at 4deg). */
+  --band-h: 120px;
+  --tilt: 4deg;
+  --thanks-h: calc(var(--band-h) + 8vw);
   border-radius: 0 0 40px 40px;
   background: var(--cta-paper);
   color: var(--cta-ink);
+  /* Falling keyword shapes (.physics-pit) enter at the section's own top edge. */
+  overflow: clip;
 }
 
 /* Main must not paint behind the CTA's rounded corners; its sections bring
@@ -91,6 +97,218 @@ p {
 
 .collection + .apply-cta {
   border-top: 0;
+}
+
+/* Two "Thank you" marquee bands crossing in a shallow X across the top of
+   the CTA: black tilted one way scrolling left, green tilted the other way
+   scrolling right. They sit above the keyword shapes, which fall in from
+   under them. */
+.apply-cta__thanks {
+  position: relative;
+  z-index: 1;
+  align-self: stretch;
+  height: var(--thanks-h);
+  margin: -6rem -30px 0;
+}
+
+.apply-cta__band {
+  position: absolute;
+  top: 50%;
+  left: -5%;
+  display: flex;
+  align-items: center;
+  width: 110%;
+  height: var(--band-h);
+  margin-top: calc(var(--band-h) / -2);
+  overflow: hidden;
+}
+
+.apply-cta__band--a {
+  z-index: 1;
+  rotate: calc(var(--tilt) * -1);
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.apply-cta__band--b {
+  rotate: var(--tilt);
+  background: var(--color-primary);
+  color: var(--color-black);
+}
+
+.apply-cta__band--b .apply-cta__thanks-track {
+  animation-direction: reverse;
+}
+
+/* GSAP has taken over the loop (lib/thanks-marquee.js). */
+.apply-cta__thanks[data-marquee-js] .apply-cta__thanks-track {
+  animation: none;
+}
+
+.apply-cta__band--b .apply-cta__thanks-group i {
+  background: var(--color-black);
+}
+
+.apply-cta__thanks-track {
+  display: flex;
+  width: max-content;
+  animation: thanks-scroll 30s linear infinite;
+}
+
+.apply-cta__thanks-group {
+  display: flex;
+  align-items: center;
+}
+
+.apply-cta__thanks-group span {
+  padding-inline: 2.5rem;
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* Green dot between repeats. */
+.apply-cta__thanks-group i {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+@keyframes thanks-scroll {
+  to {
+    translate: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apply-cta__thanks-track {
+    animation: none;
+  }
+}
+
+/* Keyword pit above the CTA pitch (lib/physics-pit.js). Before the physics
+   starts (or without it) the shapes sit in a wrapped row on the floor; once
+   [data-physics-ready] they're absolutely placed by the simulation. */
+.physics-pit {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 400px;
+  /* The pit's top edge (where shapes appear) is the bands' crossing line;
+     the extra 2rem cancels the flex gap. */
+  margin-top: calc(var(--thanks-h) / -2 - 2rem);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.physics-shape {
+  display: inline-grid;
+  place-content: center;
+  flex: none;
+  height: 76px;
+  padding: 0 2rem;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+}
+
+.physics-pit[data-physics-ready] .physics-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.physics-pit[data-dragging],
+.physics-shape[data-dragging] {
+  cursor: grabbing;
+}
+
+.physics-shape--pill {
+  border-radius: 999px;
+}
+
+.physics-shape--circle {
+  width: 108px;
+  height: 108px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.physics-shape--square {
+  width: 120px;
+  height: 120px;
+  padding: 0;
+  border-radius: 26px;
+}
+
+.physics-shape--green { background: var(--color-primary); color: var(--color-white); }
+.physics-shape--blue { background: var(--color-accent); color: var(--color-white); }
+.physics-shape--black { background: var(--color-black); color: var(--color-white); }
+.physics-shape--sky { background: #5b9bff; color: var(--color-black); }
+.physics-shape--mint { background: #b8efcf; color: var(--color-black); }
+.physics-shape--sand { background: #f3f0eb; color: var(--color-black); box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08); }
+
+/* Tablet: mid-size shapes. */
+@media (max-width: 900px) {
+  .physics-pit {
+    height: 360px;
+    gap: 0.35rem;
+  }
+
+  .physics-shape {
+    height: 58px;
+    padding: 0 1.5rem;
+    font-size: 20px;
+  }
+
+  .physics-shape--circle {
+    width: 82px;
+    height: 82px;
+    padding: 0;
+  }
+
+  .physics-shape--square {
+    width: 92px;
+    height: 92px;
+    padding: 0;
+    border-radius: 20px;
+  }
+}
+
+/* Phone: small shapes so all fit. */
+@media (max-width: 600px) {
+  .physics-shape {
+    height: 42px;
+    padding: 0 1rem;
+    font-size: 15px;
+  }
+
+  .physics-shape--circle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .physics-shape--square {
+    width: 66px;
+    height: 66px;
+    border-radius: 14px;
+  }
 }
 
 .apply-cta__title {
@@ -159,7 +377,24 @@ p {
 
 @media (max-width: 900px) {
   .apply-cta {
+    --band-h: 72px;
+    --tilt: 6deg;
+    --thanks-h: calc(var(--band-h) + 12vw);
     padding: 4rem 1rem;
+  }
+
+  .apply-cta__thanks {
+    margin: -4rem -1rem 0;
+  }
+
+  .apply-cta__thanks-group span {
+    padding-inline: 1.25rem;
+    font-size: 30px;
+  }
+
+  .apply-cta__thanks-group i {
+    width: 10px;
+    height: 10px;
   }
 }
 
@@ -538,7 +773,7 @@ p {
   bottom: 0;
   z-index: 0;
   margin-top: calc(var(--tuck) * -1);
-  padding: calc(2.5rem + var(--tuck)) 30px 2rem;
+  padding: calc(3rem + var(--tuck)) max(1.5rem, (100% - var(--container)) / 2 + 1.5rem) 2.5rem;
   background: var(--color-black);
   color: var(--color-white);
   font-size: var(--fs-footer-link);
@@ -571,12 +806,13 @@ p {
 .site-footer__label {
   margin: 0;
   font-size: var(--fs-footer-link);
+  font-weight: 500;
 }
 
 .site-footer__explore {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 3.5rem;
+  gap: 0.75rem 2.5rem;
 }
 
 .site-footer__explore a {
@@ -590,9 +826,9 @@ p {
 
 /* Big left-aligned wordmark sized to span the footer's width. */
 .site-footer__wordmark {
-  margin: 2.5rem 0 0;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgb(255 255 255 / 0.3);
+  margin: 3rem 0 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.25);
   font-family: var(--font-display);
   /* The word is ~3.02em wide in Anek Latin, so this fills the footer exactly. */
   font-size: calc(100cqw / 3.02);
@@ -606,41 +842,39 @@ p {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem 2rem;
+  justify-content: space-around;
+  gap: 1rem 2rem;
   padding-top: 2rem;
 }
 
 .site-footer__logo img {
   display: block;
-  height: 44px;
+  height: 32px;
   width: auto;
 }
 
+/* Small spaced-out mono links, evenly spread like the logo row. */
 .site-footer__legal {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 0.75rem 2rem;
+  display: contents;
 }
 
-.site-footer__legal a,
-.site-footer__copy {
-  font-family: var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.site-footer__legal a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
+.site-footer .site-footer__legal a,
 .site-footer__copy {
   margin: 0;
-  color: rgb(255 255 255 / 0.55);
-  font-size: var(--fs-footer-link);
+  color: rgb(255 255 255 / 0.7);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.site-footer .site-footer__legal a:hover {
+  color: var(--color-white);
+}
+
+.site-footer__copy {
+  color: rgb(255 255 255 / 0.45);
 }
 
 /* Phone: full-screen menu. The groups are stacked pills anchored to the
@@ -667,17 +901,20 @@ p {
   }
 
   .site-footer {
-    padding: 2rem 1rem 1.5rem;
+    padding: calc(2rem + var(--tuck)) 1rem 1.5rem;
   }
 
   .site-footer__explore {
     gap: 0.5rem 1.5rem;
   }
 
-  .site-footer__legal {
-    flex-basis: 100%;
+  .site-footer__bottom {
     justify-content: flex-start;
-    gap: 0.5rem 1.25rem;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .site-footer__logo {
+    flex-basis: 100%;
   }
 
   .site-header--over .site-menu-toggle,

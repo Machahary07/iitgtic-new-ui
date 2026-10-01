@@ -1,11 +1,7 @@
-import { html } from '../lib/html.js';
+import { legalPage, mountLegal } from '../components/legal-page.js';
 
 export const title = 'Privacy Policy';
 
-// Route: /privacy
-export default function page() {
-  return html`
-    <section class="page">
-      <h1>Privacy Policy</h1>
-    </section>`;
-}
+// Route: /privacy (copy in data/legal.js)
+export default ({ path }) => legalPage('privacy', path);
+export const mount = mountLegal;

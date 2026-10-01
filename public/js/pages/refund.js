@@ -1,11 +1,7 @@
-import { html } from '../lib/html.js';
+import { legalPage, mountLegal } from '../components/legal-page.js';
 
-export const title = 'Refund Policy';
+export const title = 'Fees & Refunds';
 
-// Route: /refund
-export default function page() {
-  return html`
-    <section class="page">
-      <h1>Refund Policy</h1>
-    </section>`;
-}
+// Route: /refund (copy in data/legal.js)
+export default ({ path }) => legalPage('refund', path);
+export const mount = mountLegal;
